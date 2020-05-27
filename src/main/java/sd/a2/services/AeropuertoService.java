@@ -13,7 +13,9 @@ import java.util.List;
 public class AeropuertoService {
     @Autowired
     private VueloRepository vueloRepository;
+    @Autowired
     private AerolineaRepository aerolineaRepository;
+    @Autowired
     private AeropuertoRepository aeropuertoRepository;
 
     public AeropuertoService(){}
@@ -21,4 +23,8 @@ public class AeropuertoService {
     public Aeropuerto getAeropuerto(String codigo){return aeropuertoRepository.findByCodigo(codigo);}
 
     public List<Aeropuerto> getAeropuertos(){return aeropuertoRepository.findAll();}
+
+    public List<Aeropuerto> getAeropuertosCiudad(String ciudad){
+        return aeropuertoRepository.findByCiudadIgnoreCase(ciudad);
+    }
 }

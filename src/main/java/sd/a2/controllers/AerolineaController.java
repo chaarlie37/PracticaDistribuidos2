@@ -24,17 +24,7 @@ public class AerolineaController {
     @Autowired
     private AerolineaRepository aerolineaRepository;
 
-    @PostConstruct
-    public void init(){
-        Aerolinea iberia = new Aerolinea("Iberia", "IB", "www.iberia.com", "901111500", 0);
-        Aerolinea ryanair = new Aerolinea("Ryanair", "FR", "www.ryanair.com", "918294840", 0);
-        Aerolinea british = new Aerolinea("British Airways", "BA", "www.ba.com", "912754779", 0);
-        Aerolinea aireuropa = new Aerolinea("Air Europa", "UX", "www.aireuropa.com", "911401501", 0);
-        aerolineaRepository.save(iberia);
-        aerolineaRepository.save(ryanair);
-        aerolineaRepository.save(british);
-        aerolineaRepository.save(aireuropa);
-    }
+
 
     @RequestMapping(value="/aerolinea/{codigo}", method = RequestMethod.GET)
     public Aerolinea getAerolinea(@PathVariable("codigo")String codigo){

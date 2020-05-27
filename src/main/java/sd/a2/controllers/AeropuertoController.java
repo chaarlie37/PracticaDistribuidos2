@@ -11,6 +11,7 @@ import sd.a2.repositories.AeropuertoRepository;
 import sd.a2.repositories.VueloRepository;
 import sd.a2.services.AeropuertoService;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -28,15 +29,24 @@ public class AeropuertoController {
     @Autowired
     private VueloRepository vueloRepository;
 
+
+
     @RequestMapping(value = "/aeropuertos", method = RequestMethod.GET)
     public List<Aeropuerto> getAeropuertos(){
         return aeropuertoService.getAeropuertos();
     }
 
+    @RequestMapping(value = "/aeropuertos/{ciudad}", method = RequestMethod.GET)
+    public List<Aeropuerto> getAeropuertosCiudad(@PathVariable("ciudad") String ciudad){
+        return aeropuertoService.getAeropuertosCiudad(ciudad);
+    }
+
     @RequestMapping(value= "/aeropuerto/{codigo}", method = RequestMethod.GET)
-    public Aeropuerto getAeropuerto(@PathVariable("@codigo") String codigo){
+    public Aeropuerto getAeropuerto(@PathVariable("codigo") String codigo){
         return aeropuertoService.getAeropuerto(codigo);
     }
+
+
 
 
 }

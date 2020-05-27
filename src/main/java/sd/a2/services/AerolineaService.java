@@ -21,7 +21,7 @@ public class AerolineaService {
 
     //private Map<String, Aerolinea> aerolineaMap = new HashMap<String, Aerolinea>();
     public AerolineaService(){
-        crearDatos();
+        //crearDatos();
     }
 
     public Aerolinea getAerolinea(String codigo){
