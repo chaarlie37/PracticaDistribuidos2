@@ -1,37 +1,41 @@
-package sd.a2.controllers;
-
+package sd.a2.services;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 import sd.a2.model.Aerolinea;
 import sd.a2.model.Vuelo;
-import sd.a2.repositories.AerolineaRepository;
 import sd.a2.repositories.VueloRepository;
-import sd.a2.services.VuelosService;
-
-import javax.annotation.PostConstruct;
+import sd.a2.repositories.AerolineaRepository;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-@RestController
-public class VueloController {
-
-    @Autowired
-    private VuelosService vuelosService;
-
-    @Autowired
-    private AerolineaRepository aerolineaRepository;
+@Component
+public class VuelosService {
 
     @Autowired
     private VueloRepository vueloRepository;
+    private AerolineaRepository aerolineaRepository;
+
+    public VuelosService(){
+
+    }
+
+    public Vuelo getVuelo(String codigo){
+        return vueloRepository.findByCodigo(codigo);
+    }
+
+    public List<Vuelo> getVuelosFecha(Date fecha){
+        Date finDia = new Date(fecha.getTime() + 24 * 3600 * 1000 - 1);
+        return vueloRepository.findAllBySalidaBetween(fecha, finDia);
+    }
 
 
-    @PostConstruct
-    public void init(){
+    public List<Vuelo> getVuelos(){
+        return vueloRepository.findAll();
+    }
+
+    public void crearDatos(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Aerolinea iberia = new Aerolinea("Iberia", "IB", "www.iberia.com", "901111500", 0);
         Aerolinea ryanair = new Aerolinea("Ryanair", "FR", "www.ryanair.com", "918294840", 0);
@@ -53,28 +57,7 @@ public class VueloController {
             vueloRepository.save(v4);
             vueloRepository.save(v5);
         }catch (ParseException e){}
-    }
 
-    @RequestMapping(value = "/vuelos", method = RequestMethod.GET)
-    public List<Vuelo> getVuelos(){
-        return vuelosService.getVuelos();
-    }
-
-    @RequestMapping(value = "/vuelos/{fecha}")
-    public List<Vuelo> getVuelosFecha(@PathVariable("fecha") String fecha){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.println("FECHA");
-        try{
-            System.out.println(simpleDateFormat.parse(fecha));
-            return vuelosService.getVuelosFecha(simpleDateFormat.parse(fecha));
-        } catch (ParseException e){
-            return null;
-        }
-    }
-
-    @RequestMapping(value = "/vuelo/{codigo}")
-    public Vuelo getVuelo(@PathVariable("codigo") String codigo){
-        return vuelosService.getVuelo(codigo);
     }
 
 
