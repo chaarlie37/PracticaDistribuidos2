@@ -67,12 +67,14 @@ public class VueloController {
             Vuelo v4 = new Vuelo("BA0001", simpleDateFormat.parse("02-06-2020 17:00"), 450, 500, british, madrid, ny);
             Vuelo v5 = new Vuelo("UX0001", simpleDateFormat.parse("01-06-2020 23:30"), 45, 75, aireuropa, madrid, palma);
             Vuelo v6 = new Vuelo("UX0002", simpleDateFormat.parse("01-06-2020 23:30"), 45, 75, aireuropa, madrid, berlin);
+            Vuelo v7 = new Vuelo("UX0003", simpleDateFormat.parse("02-06-2020 23:30"), 120, 140, aireuropa, berlin, madrid);
             vueloRepository.save(v1);
             vueloRepository.save(v2);
             vueloRepository.save(v3);
             vueloRepository.save(v4);
             vueloRepository.save(v5);
             vueloRepository.save(v6);
+            vueloRepository.save(v7);
         }catch (ParseException e){}
     }
 
@@ -105,6 +107,7 @@ public class VueloController {
             return null;
         }
     }
+
 
     @RequestMapping(value = "/vuelo/{codigo}")
     public Vuelo getVuelo(@PathVariable("codigo") String codigo){

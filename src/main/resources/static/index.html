@@ -43,14 +43,20 @@
     <form>
         <div class="input-group">
             <div class="controls">
-               <!-- <input type="text" id="fecha" value="01-06-2020" name="fecha" class="form-control" placeholder="Fecha">
-              -->  <input type="date" id="fecha" name="fecha" class="form-control">
+               <input type="date" id="fecha-ida" class="form-control">
+            </div>
+            <div class="controls">
+                <input type="date" id="fecha-vuelta" class="form-control">
             </div>
             <div class="barra-busqueda">
                 <input type="text" id="origen" value="LEMD" name="origen" class="form-control" placeholder="Origen">
             </div>
             <div class="barra-busqueda">
                 <input type="text" id="destino" value="EDDB" name="destino" class="form-control" placeholder="Destino">
+            </div>
+            <div>
+                <input type="radio" name="idavuelta" id="ida-vuelta" checked="checked">Ida y vuelta
+                <input type="radio" name="idavuelta" id="solo-ida">Sólo ida
             </div>
         </div>
     </form>
