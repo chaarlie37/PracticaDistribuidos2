@@ -10,6 +10,9 @@
     <link href="css/bootstrap/table.css" rel="stylesheet">
     <link href="css/material-icons.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="javascript/main.js"></script>
 
     <title>Autores</title>
@@ -48,11 +51,11 @@
             <div class="controls">
                 <input type="date" id="fecha-vuelta" class="form-control">
             </div>
-            <div class="barra-busqueda">
-                <input type="text" id="origen" value="LEMD" name="origen" class="form-control" placeholder="Origen">
+            <div class="barra-busqueda ui-widget">
+                <input type="text" id="origen" name="origen" class="form-control" placeholder="Origen">
             </div>
-            <div class="barra-busqueda">
-                <input type="text" id="destino" value="EDDB" name="destino" class="form-control" placeholder="Destino">
+            <div class="barra-busqueda ui-widget">
+                <input type="text" id="destino" name="destino" class="form-control" placeholder="Destino">
             </div>
             <div>
                 <input type="radio" name="idavuelta" id="ida-vuelta" checked="checked">Ida y vuelta

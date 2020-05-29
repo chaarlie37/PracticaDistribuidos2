@@ -26,18 +26,30 @@ $(function () {
         this.precio = precio;
     }
 
+    var aeropuertos = new Array();
+    $.getJSON("/aeropuertos/", function (respuesta) {
+        var lista = [];
+        $.each(respuesta, function (i, item) {
+            lista.push(item.nombre);
+        })
+        guardar_aeropuertos(lista);
+    });
+
 
     function f() {
-        var url = "/vuelos/" + fecha_ida.val() + "/" + origen.val() + "-" + destino.val();
+        var url = "/vuelos/" + fecha_ida.val() + "/" + encodeURI(origen.val()) + "/" + encodeURI(destino.val());
+        console.log(url);
         if (origen.val() === "" || destino.val() === "")
             url = "/vuelos/" + fecha_ida.val() + "/";
         if (radio_idavuelta.is(':checked')){
             console.log("AAAAAAAAAAA");
-            var url2 = "/vuelos/" + fecha_vuelta.val() + "/" + destino.val() + "-" + origen.val();
+            var url2 = "/vuelos/" + fecha_vuelta.val() + "/" + encodeURI(destino.val()) + "/" + encodeURI(origen.val());
+            console.log(url2);
             $.getJSON(url, function (respuesta) {
                 var lista = [];
                 $.each(respuesta, function (i, item) {
                     lista.push(item);
+                    console.log(item);
                 })
                 guardar_ida(lista);
             });
@@ -45,6 +57,7 @@ $(function () {
                 var lista = [];
                 $.each(respuesta, function (i, item) {
                     lista.push(item);
+                    console.log("v" + item);
                 })
                 guardar_vuelta(lista);
             });
@@ -57,29 +70,22 @@ $(function () {
             });
         }
     }
-    /*
-    $.ajax({
-        url : "/vuelos/" + fecha.val() + "/" + origen.val() + "-" + destino.val(),
-        type: "GET",
-        success    : function() {
-            console.log("Exito");
-        }
-    });
-
-     */
 
     function guardar_ida(a) {
         console.log("guardando");
         vuelos_ida = a;
-        console.log(vuelos_ida);
+        console.log("ida" + vuelos_ida);
         if (vuelos_vuelta.length > 0){
+            console.log(vuelos_ida);
             mostrar_parejas_vuelos();
         }
     }
 
     function guardar_vuelta(a) {
         vuelos_vuelta = a;
+        console.log("vuelta " + vuelos_vuelta);
         if (vuelos_ida.length > 0){
+
             mostrar_parejas_vuelos();
         }
     }
@@ -103,5 +109,28 @@ $(function () {
                 lista.append($('<p>').html(""));
             }
         }
+    }
+
+    function guardar_aeropuertos(l) {
+        aeropuertos = l;
+        origen.autocomplete({
+            source: aeropuertos,
+            autoFocus: true,
+            change: function (event, ui) {
+                if(!ui.item && origen.val() != ""){
+                    origen.val($('ul#ui-id-1 li:first div').text());
+                }
+            }
+        });
+
+        destino.autocomplete({
+            source: aeropuertos,
+            autoFocus: true,
+            change: function (event, ui) {
+                if(!ui.item && destino.val() != ""){
+                    destino.val($('ul#ui-id-2 li:first div').text());
+                }
+            }
+        });
     }
 })

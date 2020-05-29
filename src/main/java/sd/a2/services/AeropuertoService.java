@@ -20,7 +20,7 @@ public class AeropuertoService {
 
     public AeropuertoService(){}
 
-    public Aeropuerto getAeropuerto(String codigo){return aeropuertoRepository.findByCodigo(codigo);}
+    public Aeropuerto getAeropuerto(String nombre){return aeropuertoRepository.findByNombre(nombre);}
 
     public List<Aeropuerto> getAeropuertos(){return aeropuertoRepository.findAll();}
 

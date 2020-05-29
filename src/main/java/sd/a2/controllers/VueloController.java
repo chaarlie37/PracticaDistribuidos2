@@ -67,7 +67,7 @@ public class VueloController {
             Vuelo v4 = new Vuelo("BA0001", simpleDateFormat.parse("02-06-2020 17:00"), 450, 500, british, madrid, ny);
             Vuelo v5 = new Vuelo("UX0001", simpleDateFormat.parse("01-06-2020 23:30"), 45, 75, aireuropa, madrid, palma);
             Vuelo v6 = new Vuelo("UX0002", simpleDateFormat.parse("01-06-2020 23:30"), 45, 75, aireuropa, madrid, berlin);
-            Vuelo v7 = new Vuelo("UX0003", simpleDateFormat.parse("02-06-2020 23:30"), 120, 140, aireuropa, berlin, madrid);
+            Vuelo v7 = new Vuelo("UX0003", simpleDateFormat.parse("02-06-2020 12:15"), 120, 140, aireuropa, berlin, madrid);
             vueloRepository.save(v1);
             vueloRepository.save(v2);
             vueloRepository.save(v3);
@@ -95,10 +95,12 @@ public class VueloController {
         }
     }
 
-    @RequestMapping(value = "/vuelos/{fecha}/{origen}-{destino}", method = RequestMethod.GET)
+    @RequestMapping(value = "/vuelos/{fecha}/{origen}/{destino}", method = RequestMethod.GET)
     public List<Vuelo> getVuelosFecha(@PathVariable("fecha") String fecha, @PathVariable("origen") String origen, @PathVariable("destino") String destino){
         Aeropuerto aeropuertoOrigen = aeropuertoService.getAeropuerto(origen);
         Aeropuerto aeropuertoDestino = aeropuertoService.getAeropuerto(destino);
+        System.out.println(origen);
+        System.out.println(destino);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try{
             System.out.println(simpleDateFormat.parse(fecha));

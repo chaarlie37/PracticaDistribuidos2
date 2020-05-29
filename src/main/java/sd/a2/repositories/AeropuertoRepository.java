@@ -10,4 +10,5 @@ public interface AeropuertoRepository extends JpaRepository<Aeropuerto, Integer>
     Aeropuerto findByCodigo(String codigo);
     List<Aeropuerto> findAll();
     List<Aeropuerto> findByCiudadIgnoreCase(String ciudad);
+    Aeropuerto findByNombre(String nombre);
 }
