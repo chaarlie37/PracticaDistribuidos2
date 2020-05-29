@@ -35,11 +35,23 @@ $(function () {
         }
     });
 
+    for (var i = 0; i<vuelos_ida; i++){
+        $('#' + vuelos_ida[i].aerolinea.nombre).dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                "Cerrar": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+
     lista.on('click', '.aerolinea', function () {
         console.log($(this).text());
         console.log($(this));
-        $("#dialog " + "div #" + $(this).text()).dialog("open");
-        $("#dialog " + "div #" + $(this).text()).dialog({
+        $('#' + $(this).text()).dialog("open");
+        $('#' + $(this).text()).dialog({
             autoOpen: false,
             modal: true,
             buttons: {
