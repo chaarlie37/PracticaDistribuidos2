@@ -1,5 +1,3 @@
-
-
 $(function () {
     var boton = $('#btn-enviar');
     var fecha_ida = $('#fecha-ida');
@@ -12,18 +10,38 @@ $(function () {
     var vuelos_vuelta = new Array();
     var parejas_vuelos = [];
     var lista = $("#lista");
+    var aerolinea = $("#aerolinea");
+
+
     boton.on('click', f)
     radio_soloida.on('click', function () {
         fecha_vuelta.hide();
     })
     radio_idavuelta.on('click', function () {
         fecha_vuelta.show();
+        btnaerolinea.show();
     })
 
-    function ParejaVuelos(ida, vuelta, precio) {
+    aerolinea.click(function(){
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                            $("#dialog").dialog({
+                               autoOpen: false,
+                               modal: true,
+                               buttons: {
+                                    "Cerrar": function () {
+                                        $(this).dialog("close");
+                                    }
+                               }
+                            });
+                        })
+
+
+    function ParejaVuelos(ida, vuelta, precio, aerolinea_ida, aerolinea_vuelta) {
         this.ida = ida;
         this.vuelta = vuelta;
         this.precio = precio;
+        this.aerolinea_ida = aerolinea_ida;
+        this.aerolinea_vuelta = aerolinea_vuelta;
     }
 
     var aeropuertos = new Array();
@@ -34,6 +52,8 @@ $(function () {
         })
         guardar_aeropuertos(lista);
     });
+
+
 
 
     function f() {
@@ -69,7 +89,28 @@ $(function () {
                 })
             });
         }
+
+
     }
+
+    /*function dialogo(){
+                $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Cerrar": function () {
+                        $(this).dialog("close");
+                    }
+                }
+                });
+                $("#abrir").button().click(function () {
+                    $("#dialog").dialog("option", "width", 600);
+                    $("#dialog").dialog("option", "height", 300);
+                    $("#dialog").dialog("open");
+                });
+    });
+    */
+
 
     function guardar_ida(a) {
         console.log("guardando");
@@ -96,20 +137,25 @@ $(function () {
             for (var j = 0; j<vuelos_vuelta.length; j++){
                 console.log("Ida: " + vuelos_ida[i].codigo);
                 console.log("Vuelta: " + vuelos_vuelta[j].codigo);
+                var aerolinea_ida = vuelos_ida[i].aerolinea.nombre;
+                var aerolinea_vuelta = vuelos_vuelta[i].aerolinea.nombre;
                 var precio = vuelos_ida[i].precio + vuelos_vuelta[j].precio;
                 if(vuelos_ida[i].aerolinea.codigo === vuelos_vuelta[j].aerolinea.codigo){
                     precio = precio * 0.80;
                 }
-                var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio);
+                var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio, aerolinea_ida,aerolinea_vuelta);
                 parejas_vuelos.push(pareja);
                 console.log("pareja: " + pareja.ida.codigo);
                 lista.append($('<p>').html(pareja.ida.codigo.toString() + " Origen: " + pareja.ida.origen.nombre + " Destino: " + pareja.ida.destino.nombre  + " Fecha: " + new Date(pareja.ida.salida).toUTCString()));
                 lista.append($('<p>').html(pareja.vuelta.codigo + " Origen: " + pareja.vuelta.origen.nombre + " Destino: " + pareja.vuelta.destino.nombre  + " Fecha: " + new Date(pareja.vuelta.salida).toUTCString()));
                 lista.append($('<p>').html("Precio: " + pareja.precio));
-                lista.append($('<p>').html(""));
+                lista.append($('<div id="aerolinea">').html("Aerolinea origen: " + pareja.aerolinea_ida));
+                lista.append($('<p>').html("Aerolinea destino: " + pareja.aerolinea_vuelta));
+
             }
         }
     }
+
 
     function guardar_aeropuertos(l) {
         aeropuertos = l;
