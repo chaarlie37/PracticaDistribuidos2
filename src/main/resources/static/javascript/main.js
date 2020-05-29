@@ -1,3 +1,5 @@
+
+
 $(function () {
     var boton = $('#btn-enviar');
     var fecha_ida = $('#fecha-ida');
@@ -10,6 +12,7 @@ $(function () {
     var vuelos_vuelta = new Array();
     var parejas_vuelos = [];
     var lista = $("#lista");
+    var dialogo = $("#dialog");
     var aerolinea = $("#aerolinea");
 
 
@@ -22,26 +25,36 @@ $(function () {
         btnaerolinea.show();
     })
 
-    aerolinea.click(function(){
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-                            $("#dialog").dialog({
-                               autoOpen: false,
-                               modal: true,
-                               buttons: {
-                                    "Cerrar": function () {
-                                        $(this).dialog("close");
-                                    }
-                               }
-                            });
-                        })
+    $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+            "Cerrar": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    lista.on('click', '.aerolinea', function () {
+        console.log($(this).text());
+        console.log($(this));
+        $("#dialog " + "div #" + $(this).text()).dialog("open");
+        $("#dialog " + "div #" + $(this).text()).dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                "Cerrar": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
 
 
-    function ParejaVuelos(ida, vuelta, precio, aerolinea_ida, aerolinea_vuelta) {
+    function ParejaVuelos(ida, vuelta, precio) {
         this.ida = ida;
         this.vuelta = vuelta;
         this.precio = precio;
-        this.aerolinea_ida = aerolinea_ida;
-        this.aerolinea_vuelta = aerolinea_vuelta;
     }
 
     var aeropuertos = new Array();
@@ -52,8 +65,6 @@ $(function () {
         })
         guardar_aeropuertos(lista);
     });
-
-
 
 
     function f() {
@@ -89,8 +100,6 @@ $(function () {
                 })
             });
         }
-
-
     }
 
     /*function dialogo(){
@@ -137,25 +146,23 @@ $(function () {
             for (var j = 0; j<vuelos_vuelta.length; j++){
                 console.log("Ida: " + vuelos_ida[i].codigo);
                 console.log("Vuelta: " + vuelos_vuelta[j].codigo);
-                var aerolinea_ida = vuelos_ida[i].aerolinea.nombre;
-                var aerolinea_vuelta = vuelos_vuelta[i].aerolinea.nombre;
                 var precio = vuelos_ida[i].precio + vuelos_vuelta[j].precio;
                 if(vuelos_ida[i].aerolinea.codigo === vuelos_vuelta[j].aerolinea.codigo){
                     precio = precio * 0.80;
                 }
-                var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio, aerolinea_ida,aerolinea_vuelta);
+                var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio);
                 parejas_vuelos.push(pareja);
                 console.log("pareja: " + pareja.ida.codigo);
                 lista.append($('<p>').html(pareja.ida.codigo.toString() + " Origen: " + pareja.ida.origen.nombre + " Destino: " + pareja.ida.destino.nombre  + " Fecha: " + new Date(pareja.ida.salida).toUTCString()));
                 lista.append($('<p>').html(pareja.vuelta.codigo + " Origen: " + pareja.vuelta.origen.nombre + " Destino: " + pareja.vuelta.destino.nombre  + " Fecha: " + new Date(pareja.vuelta.salida).toUTCString()));
                 lista.append($('<p>').html("Precio: " + pareja.precio));
-                lista.append($('<div id="aerolinea">').html("Aerolinea origen: " + pareja.aerolinea_ida));
-                lista.append($('<p>').html("Aerolinea destino: " + pareja.aerolinea_vuelta));
-
+                lista.append($('<p class="aerolinea" id="aerolinea-' + i + '-' + j + '">').html(pareja.ida.aerolinea.nombre));
+                lista.append($('<p class="aerolinea" id="aerolinea-' + i + '-' + j + '">').html(pareja.vuelta.aerolinea.nombre));
+                dialogo.append($('<div id="' + pareja.ida.aerolinea.nombre + '">').html(pareja.ida.aerolinea.nombre + " " + pareja.ida.aerolinea.codigo));
+                dialogo.append($('<p id="aerolinea-' + i + '-' + j + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo));
             }
         }
     }
-
 
     function guardar_aeropuertos(l) {
         aeropuertos = l;
