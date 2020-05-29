@@ -14,7 +14,20 @@ $(function () {
     var lista = $("#lista");
     var dialogo = $("#dialog");
     var aerolinea = $("#aerolinea");
+    //var puntuacion = $("#rateYo")
 
+   /* puntuacion.rateYo({
+        starWidth: "10px",
+        numStars: 5,
+        rating: 5,
+        halfStar: true,
+        readOnly:true,
+        multiColor: {
+              "startColor": "#FF0000", //RED
+              "endColor"  : "#00FF00"  //GREEN
+            }
+      });
+    */
 
     boton.on('click', f)
     radio_soloida.on('click', function () {
@@ -48,6 +61,10 @@ $(function () {
         });
         dialogo.dialog("open");
     })
+
+
+
+
 
 
     function ParejaVuelos(ida, vuelta, precio) {
@@ -97,7 +114,7 @@ $(function () {
                 $.each(respuesta, function (i, item) {
                     lista.append($('<p>').html(item.codigo + " Origen: " + item.origen.nombre + " Destino: " + item.destino.nombre  + " Fecha: " + new Date(item.salida).toUTCString()));
                     lista.append($('<p class="aerolinea" id="' + item.aerolinea.codigo + '">>').html(item.aerolinea.nombre));
-                    dialogo.append($('<div id="aerolinea-' + item.aerolinea.codigo + '">').html(item.aerolinea.nombre + " " + item.aerolinea.codigo));
+                    dialogo.append($('<div id="aerolinea-' + item.aerolinea.codigo + '">').html(item.aerolinea.nombre + " " + item.aerolinea.codigo + " " + item.aerolinea.telefono + " " + item.aerolinea.web));
                 })
             });
         }
@@ -120,6 +137,7 @@ $(function () {
                 });
     });
     */
+
 
 
     function guardar_ida(a) {
@@ -159,8 +177,9 @@ $(function () {
                 lista.append($('<p class="aerolinea" id="' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre));
                 lista.append($('<p>').html("Precio: " + pareja.precio));
                 lista.append($('<p>').html("-------------------------------"));
-                dialogo.append($('<div id="aerolinea-' + pareja.ida.aerolinea.codigo + '">').html(pareja.ida.aerolinea.nombre + " " + pareja.ida.aerolinea.codigo));
-                dialogo.append($('<div id="aerolinea-' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo));
+                dialogo.append($('<div id="aerolinea-' + pareja.ida.aerolinea.codigo + '">').html(pareja.ida.aerolinea.nombre + " " + pareja.ida.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
+                dialogo.append($('<div id="aerolinea-' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
+
             }
         }
     }
