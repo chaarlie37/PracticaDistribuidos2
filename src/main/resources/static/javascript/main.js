@@ -116,6 +116,7 @@ $(function () {
         origen.autocomplete({
             source: aeropuertos,
             autoFocus: true,
+            delay:0,
             change: function (event, ui) {
                 if(!ui.item && origen.val() != ""){
                     origen.val($('ul#ui-id-1 li:first div').text());
@@ -126,6 +127,7 @@ $(function () {
         destino.autocomplete({
             source: aeropuertos,
             autoFocus: true,
+            delay: 0,
             change: function (event, ui) {
                 if(!ui.item && destino.val() != ""){
                     destino.val($('ul#ui-id-2 li:first div').text());
