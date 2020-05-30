@@ -31,15 +31,13 @@ $(function () {
     radio_soloida.on('click', function () {
         fecha_vuelta.hide();
         $('#destino.barra-busqueda').css({
-            "border-bottom-right-radius": "0.50rem",
-            "border-top-right-radius": "0.50rem"
+            "border-bottom-right-radius": "0.50rem"
         });
     })
     radio_idavuelta.on('click', function () {
         fecha_vuelta.show();
         $('#destino.barra-busqueda').css({
-            "border-bottom-right-radius": "0",
-            "border-top-right-radius": "0"
+            "border-bottom-right-radius": "0"
         });
     })
 

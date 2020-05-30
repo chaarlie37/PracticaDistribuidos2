@@ -50,22 +50,21 @@
     <h1 class="h3">¿A dónde quieres ir?</h1>
 
         <form>
-            <div class="input-group">
+            <div class="input-group barras-busqueda">
                 <div class="grupo-aeropuerto-fecha">
                     <div class="grupo-input-label">
-
-                        <input type="text" id="origen" name="origen" class="barra-busqueda ui-widget" placeholder="Origen">
+                        <input type="text" id="origen" name="origen" class="origen barra-busqueda ui-widget" placeholder="Origen">
                     </div>
                     <div class="controls">
-                        <input type="text" id="fecha-ida" placeholder="Fecha de ida" class="barra-fecha">
+                        <input type="text" id="fecha-ida" placeholder="Fecha de ida" class="origen barra-fecha">
                     </div>
                 </div>
                 <div class="grupo-aeropuerto-fecha">
                     <div class="grupo-input-label">
-                        <input type="text" id="destino" name="destino" class="barra-busqueda ui-widget" placeholder="Destino">
+                        <input type="text" id="destino" name="destino" class="destino barra-busqueda ui-widget" placeholder="Destino">
                     </div>
                     <div class="controls">
-                        <input type="text" id="fecha-vuelta" placeholder="Fecha de vuelta" class="barra-fecha">
+                        <input type="text" id="fecha-vuelta" placeholder="Fecha de vuelta" class="destino barra-fecha">
                     </div>
                     <div>
 
@@ -85,16 +84,34 @@
 
 </div>
 
-<div class="container">
+<div class="contenido">
 
+    <div id="lista">
+        <div class="vuelo">
+            IB0001 Origen: Madrid (Adolfo Suárez - Madrid Barajas) Destino: Berlin (Schönefeld) Fecha: Mon, 01 Jun 2020 10:15:00 GMT
 
+            Iberia
 
+            UX0003 Origen: Berlin (Schönefeld) Destino: Madrid (Adolfo Suárez - Madrid Barajas) Fecha: Tue, 02 Jun 2020 10:15:00 GMT
 
+            Air Europa
 
-    <div id="lista"></div>
+            Precio: 290
+        </div>
+        <div class="vuelo">
+            IB0001 Origen: Madrid (Adolfo Suárez - Madrid Barajas) Destino: Berlin (Schönefeld) Fecha: Mon, 01 Jun 2020 10:15:00 GMT
+
+            Iberia
+
+            UX0003 Origen: Berlin (Schönefeld) Destino: Madrid (Adolfo Suárez - Madrid Barajas) Fecha: Tue, 02 Jun 2020 10:15:00 GMT
+
+            Air Europa
+
+            Precio: 290
+        </div>
+    </div>
     <div id="dialog"></div>
     <div id="abrir"></div>
-    <div id="rateYo"></div>
 </div>
 </body>
 </html>

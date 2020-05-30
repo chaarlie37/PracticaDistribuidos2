@@ -215,7 +215,6 @@
 
 .grupo-aeropuerto-fecha{
     display: flex;
-    margin: inherit;
 }
 
 .grupo-input-label{
@@ -236,6 +235,7 @@
     border: 1px solid #ced4da;
     border-bottom-left-radius: 0.50rem;
     border-top-left-radius: 0.50rem;
+    border-right: 0;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -286,4 +286,34 @@
 .radio{
     color: #495057;
     margin-right: 0.5rem;
+}
+
+.barras-busqueda{
+
+}
+
+.origen{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 0;
+}
+
+.destino{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0.5px solid #ced4da;
+}
+
+.vuelo{
+    background-color: #efefef;
+    border-radius: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.contenido{
+    width: 100%;
+    padding-right: 25%;
+    padding-left: 25%;
 }
