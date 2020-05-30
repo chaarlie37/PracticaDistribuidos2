@@ -14,29 +14,46 @@ $(function () {
     var lista = $("#lista");
     var dialogo = $("#dialog");
     var aerolinea = $("#aerolinea");
-    //var puntuacion = $("#rateYo")
+    var puntuacion = $("#rateYo")
+    var barra_fecha = $(".barra-fecha");
 
-   /* puntuacion.rateYo({
-        starWidth: "10px",
+   puntuacion.rateYo({
+        starWidth: "20px",
         numStars: 5,
-        rating: 5,
+        rating: 4.5,
         halfStar: true,
         readOnly:true,
-        multiColor: {
-              "startColor": "#FF0000", //RED
-              "endColor"  : "#00FF00"  //GREEN
-            }
       });
-    */
+
+
 
     boton.on('click', f)
     radio_soloida.on('click', function () {
         fecha_vuelta.hide();
+        $('#destino.barra-busqueda').css({
+            "border-bottom-right-radius": "0.50rem",
+            "border-top-right-radius": "0.50rem"
+        });
     })
     radio_idavuelta.on('click', function () {
         fecha_vuelta.show();
-        btnaerolinea.show();
+        $('#destino.barra-busqueda').css({
+            "border-bottom-right-radius": "0",
+            "border-top-right-radius": "0"
+        });
     })
+
+    barra_fecha.on("click", function () {
+        $(this).prop('type', 'date');
+    });
+
+    /*
+    barra_fecha.on("mouseleave", function () {
+        if ($(this).val() == "") {
+            $(this).prop('type', 'text');
+        }
+    });
+*/
 
     $("#dialog").dialog({
         autoOpen: false,

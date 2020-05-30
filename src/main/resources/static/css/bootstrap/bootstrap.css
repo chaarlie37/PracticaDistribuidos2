@@ -3413,7 +3413,7 @@ input[type="button"].btn-block {
 .input-group {
   position: relative;
   display: -ms-flexbox;
-  display: flex;
+  display: block;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -ms-flex-align: stretch;

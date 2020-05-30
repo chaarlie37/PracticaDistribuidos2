@@ -13,15 +13,13 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
-    <link rel="stylesheet" href="jquery.rateyo.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
     <script src="javascript/main.js"></script>
-    <script src="jquery.js"></script>
-    <script src="jquery.rateyo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
 
 
-    <title>Autores</title>
+    <title>Vuelos</title>
 </head>
 <body>
 <!--
@@ -48,30 +46,50 @@
 </nav>
 -->
 
+<div class="zona-busqueda">
+    <h1 class="h3">¿A dónde quieres ir?</h1>
+
+        <form>
+            <div class="input-group">
+                <div class="grupo-aeropuerto-fecha">
+                    <div class="grupo-input-label">
+
+                        <input type="text" id="origen" name="origen" class="barra-busqueda ui-widget" placeholder="Origen">
+                    </div>
+                    <div class="controls">
+                        <input type="text" id="fecha-ida" placeholder="Fecha de ida" class="barra-fecha">
+                    </div>
+                </div>
+                <div class="grupo-aeropuerto-fecha">
+                    <div class="grupo-input-label">
+                        <input type="text" id="destino" name="destino" class="barra-busqueda ui-widget" placeholder="Destino">
+                    </div>
+                    <div class="controls">
+                        <input type="text" id="fecha-vuelta" placeholder="Fecha de vuelta" class="barra-fecha">
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="radio-y-boton-busqueda">
+                <div class="radio-button-group">
+                    <input class="radio" type="radio" name="idavuelta" id="ida-vuelta" checked="checked"><span class="radio">Ida y vuelta</span>
+                    <input class="radio" type="radio" name="idavuelta" id="solo-ida"><span class="radio">Sólo ida</span>
+                </div>
+                <div class="btn btn-primary" id="btn-enviar">
+                    Buscar
+                </div>
+            </div>
+        </form>
+
+</div>
+
 <div class="container">
-    <form>
-        <div class="input-group">
-            <div class="controls">
-               <input type="date" id="fecha-ida" value="2020-06-01" class="form-control">
-            </div>
-            <div class="controls">
-                <input type="date" id="fecha-vuelta" value="2020-06-02" class="form-control">
-            </div>
-            <div class="barra-busqueda ui-widget">
-                <input type="text" id="origen" name="origen" class="form-control" placeholder="Origen">
-            </div>
-            <div class="barra-busqueda ui-widget">
-                <input type="text" id="destino" name="destino" class="form-control" placeholder="Destino">
-            </div>
-            <div>
-                <input type="radio" name="idavuelta" id="ida-vuelta" checked="checked">Ida y vuelta
-                <input type="radio" name="idavuelta" id="solo-ida">Sólo ida
-            </div>
-        </div>
-    </form>
-    <div class="btn btn-primary" id="btn-enviar">
-        Buscar
-    </div>
+
+
+
+
 
     <div id="lista"></div>
     <div id="dialog"></div>
