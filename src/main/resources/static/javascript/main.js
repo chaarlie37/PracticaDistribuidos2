@@ -199,7 +199,7 @@ $(function () {
                     "            <div class=\"pareja\">\n" +
                     "                <div class=\"vuelo\">\n" +
                     "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
-                    "                        <img src=\"/images/" + pareja.ida.aerolinea.codigo + ".png\" height=\"30px\">\n" +
+                    "                        <img class=\"aerolinea\" id=\"" + pareja.ida.aerolinea.codigo + "\" src=\"/images/" + pareja.ida.aerolinea.codigo + ".png\" height=\"30px\">\n" +
                     "                        <div class=\"texto-codigo-vuelo\">" + codigo_ida + "</div>\n" +
                     "                    </div>\n" +
                     "                    <div class=\"duracion-icono\">\n" +
@@ -223,7 +223,7 @@ $(function () {
                     "                </div>\n" +
                     "                <div class=\"vuelo\">\n" +
                     "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
-                    "                        <img src=\"/images/" + pareja.vuelta.aerolinea.codigo + ".png\" height=\"30px\">\n" +
+                    "                        <img class=\"aerolinea\" id=\"" + pareja.vuelta.aerolinea.codigo + "\" src=\"/images/" + pareja.vuelta.aerolinea.codigo + ".png\" height=\"30px\">\n" +
                     "                        <div class=\"texto-codigo-vuelo\">" + codigo_vuelta + "</div>\n" +
                     "                    </div>\n" +
                     "                    <div class=\"duracion-icono\">\n" +
@@ -251,7 +251,7 @@ $(function () {
                     "            </div>" +
                     "        </div>");
                 dialogo.append($('<div id="aerolinea-' + pareja.ida.aerolinea.codigo + '">').html(pareja.ida.aerolinea.nombre + " " + pareja.ida.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
-                dialogo.append($('<div id="aerolinea-' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
+                dialogo.append($('<div id="aerolinea-' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo + " " + pareja.vuelta.aerolinea.telefono + " " + pareja.vuelta.aerolinea.web));
 
             }
         }
