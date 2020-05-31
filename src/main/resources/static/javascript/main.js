@@ -45,6 +45,7 @@ $(function () {
         $(this).prop('type', 'date');
     });
 
+
     /*
     barra_fecha.on("mouseleave", function () {
         if ($(this).val() == "") {
@@ -178,20 +179,77 @@ $(function () {
         lista.empty();
         for (var i = 0; i<vuelos_ida.length; i++){
             for (var j = 0; j<vuelos_vuelta.length; j++){
-                console.log("Ida: " + vuelos_ida[i].codigo);
-                console.log("Vuelta: " + vuelos_vuelta[j].codigo);
                 var precio = vuelos_ida[i].precio + vuelos_vuelta[j].precio;
                 if(vuelos_ida[i].aerolinea.codigo === vuelos_vuelta[j].aerolinea.codigo){
                     precio = precio * 0.80;
                 }
                 var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio);
                 parejas_vuelos.push(pareja);
-                lista.append($('<p>').html(pareja.ida.codigo.toString() + " Origen: " + pareja.ida.origen.nombre + " Destino: " + pareja.ida.destino.nombre  + " Fecha: " + new Date(pareja.ida.salida).toUTCString()));
-                lista.append($('<p class="aerolinea" id="' + pareja.ida.aerolinea.codigo + '">').html(pareja.ida.aerolinea.nombre));
-                lista.append($('<p>').html(pareja.vuelta.codigo + " Origen: " + pareja.vuelta.origen.nombre + " Destino: " + pareja.vuelta.destino.nombre  + " Fecha: " + new Date(pareja.vuelta.salida).toUTCString()));
-                lista.append($('<p class="aerolinea" id="' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre));
-                lista.append($('<p>').html("Precio: " + pareja.precio));
-                lista.append($('<p>').html("-------------------------------"));
+                var codigo_ida = vuelos_ida[i].codigo;
+                var codigo_vuelta = vuelos_vuelta[j].codigo;
+                var aeropuerto_origen = vuelos_ida[i].origen.nombre;
+                var aeropuerto_vuelta = vuelos_ida[i].destino.nombre;
+                var duracion_ida = formatear_duracion(vuelos_ida[i].duracion);
+                var duracion_vuelta = formatear_duracion(vuelos_vuelta[j].duracion);
+                var hora_salida_ida = formatear_hora(vuelos_ida[i].salida);
+                var hora_llegada_ida = formatear_hora(vuelos_ida[i].llegada);
+                var hora_salida_vuelta = formatear_hora(vuelos_vuelta[j].salida);
+                var hora_llegada_vuelta = formatear_hora(vuelos_vuelta[j].llegada);
+                lista.append("<div class=\"zona-vuelo\">\n" +
+                    "            <div class=\"pareja\">\n" +
+                    "                <div class=\"vuelo\">\n" +
+                    "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
+                    "                        <img src=\"/images/" + pareja.ida.aerolinea.codigo + ".png\" height=\"30px\">\n" +
+                    "                        <div class=\"texto-codigo-vuelo\">" + codigo_ida + "</div>\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"duracion-icono\">\n" +
+                    "                        <div class=\"texto-duracion\">" + duracion_ida + "</div>\n" +
+                    "                        <img src=\"/images/union.svg\" height=\"30px\">\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"detalles-vuelo\">\n" +
+                    "                        <div class=\"grupo-horas-ubicaciones\">\n" +
+                    "                            <div class=\"horas\">\n" +
+                    "                                <div class=\"texto-hora\">" + hora_salida_ida + "</div>\n" +
+                    "                                <div class=\"texto-hora\">" + hora_llegada_ida + "</div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"ubicaciones\">\n" +
+                    "                                <div>\n" + aeropuerto_origen +
+                    "                                </div>\n" +
+                    "                                <div>\n" + aeropuerto_vuelta +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"vuelo\">\n" +
+                    "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
+                    "                        <img src=\"/images/" + pareja.vuelta.aerolinea.codigo + ".png\" height=\"30px\">\n" +
+                    "                        <div class=\"texto-codigo-vuelo\">" + codigo_vuelta + "</div>\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"duracion-icono\">\n" +
+                    "                        <div class=\"texto-duracion\">" + duracion_vuelta + "</div>\n" +
+                    "                        <img src=\"/images/union.svg\" height=\"30px\">\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"detalles-vuelo\">\n" +
+                    "                        <div class=\"grupo-horas-ubicaciones\">\n" +
+                    "                            <div class=\"horas\">\n" +
+                    "                                <div class=\"texto-hora\">" + hora_salida_vuelta + "</div>\n" +
+                    "                                <div class=\"texto-hora\">" + hora_llegada_vuelta + "</div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"ubicaciones\">\n" +
+                    "                                <div>\n" + aeropuerto_vuelta +
+                    "                                </div>\n" +
+                    "                                <div>\n" + aeropuerto_origen +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"precio\">\n" +
+                    "                <h3 class=\"h3\">" + precio + "€</h3>\n" +
+                    "            </div>" +
+                    "        </div>");
                 dialogo.append($('<div id="aerolinea-' + pareja.ida.aerolinea.codigo + '">').html(pareja.ida.aerolinea.nombre + " " + pareja.ida.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
                 dialogo.append($('<div id="aerolinea-' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
 
@@ -211,7 +269,6 @@ $(function () {
                 }
             }
         });
-
         destino.autocomplete({
             source: aeropuertos,
             autoFocus: true,
@@ -223,4 +280,20 @@ $(function () {
             }
         });
     }
+
+    function formatear_hora(d) {
+        var fecha = new Date(d);
+        return new Intl.DateTimeFormat('es', { hour: '2-digit', minute: '2-digit' }).format(fecha);
+    }
+
+    function formatear_duracion(min) {
+        if (min >= 60 && min % 60 != 0) {
+            return Math.trunc(min / 60) + "h " + (min % 60) + "min";
+        }else if(min >= 60 && min % 60 == 0){
+            return Math.trunc(min / 60) + "h";
+        }else{
+            return min + "min";
+        }
+    }
+
 })

@@ -62,8 +62,8 @@ public class VueloController {
         aeropuertoRepository.save(ny);
         try{
             Vuelo v1 = new Vuelo("IB0001", simpleDateFormat.parse("01-06-2020 12:15"), 120, 150, iberia, madrid, berlin);
-            Vuelo v2 = new Vuelo("IB0002", simpleDateFormat.parse("02-06-2020 07:35"), 90, 120, iberia, madrid, roma1);
-            Vuelo v3 = new Vuelo("FR0001", simpleDateFormat.parse("01-06-2020 09:30"), 95, 50, ryanair, roma2, madrid);
+            Vuelo v2 = new Vuelo("IB0002", simpleDateFormat.parse("01-06-2020 07:35"), 90, 120, iberia, madrid, roma1);
+            Vuelo v3 = new Vuelo("FR0001", simpleDateFormat.parse("02-06-2020 09:30"), 95, 50, ryanair, roma1, madrid);
             Vuelo v4 = new Vuelo("BA0001", simpleDateFormat.parse("02-06-2020 17:00"), 450, 500, british, madrid, ny);
             Vuelo v5 = new Vuelo("UX0001", simpleDateFormat.parse("01-06-2020 23:30"), 45, 75, aireuropa, madrid, palma);
             Vuelo v6 = new Vuelo("UX0002", simpleDateFormat.parse("01-06-2020 23:30"), 45, 75, aireuropa, madrid, berlin);

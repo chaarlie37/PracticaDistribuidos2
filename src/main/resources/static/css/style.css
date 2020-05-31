@@ -321,11 +321,12 @@
 }
 
 .horas{
-    display: block;
+    display: grid;
     padding-right: 2rem;
     padding-left: 0.5rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    align-items: end;
 }
 
 .hora-aeropuerto{
@@ -351,6 +352,7 @@
 }
 
 .ubicaciones{
+    display: grid;
     padding-right: 2rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -364,6 +366,7 @@
 .duracion-icono{
     display: flex;
     padding: 1rem;
+    align-items: center;
 }
 
 .precio{
@@ -378,7 +381,12 @@
 }
 
 .texto-duracion{
-
+    font-size: 0.7rem;
+    font-weight: 300;
+    text-align: center;
+    width: 2rem;
+    display: grid;
+    align-items: center;
 }
 
 .texto-hora{
@@ -387,5 +395,8 @@
 
 .texto-codigo-vuelo{
     font-weight: 300;
-    font-size: medium;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-around;
+
 }

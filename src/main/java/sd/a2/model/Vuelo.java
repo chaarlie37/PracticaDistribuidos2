@@ -2,6 +2,7 @@ package sd.a2.model;
 
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -11,6 +12,7 @@ public class Vuelo{
     private Integer id;
     private String codigo;
     private Date salida;
+    private Date llegada;
     private int duracion;  // en minutos
     private int precio;  // euros
     @ManyToOne
@@ -25,6 +27,10 @@ public class Vuelo{
     public Vuelo(String codigo, Date salida, int duracion, int precio, Aerolinea aerolinea, Aeropuerto origen, Aeropuerto destino) {
         this.codigo = codigo;
         this.salida = salida;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(salida);
+        calendar.add(Calendar.MINUTE, duracion);
+        this.llegada = calendar.getTime();
         this.duracion = duracion;
         this.precio = precio;
         this.aerolinea = aerolinea;
@@ -94,5 +100,13 @@ public class Vuelo{
 
     public void setDestino(Aeropuerto destino) {
         this.destino = destino;
+    }
+
+    public Date getLlegada() {
+        return llegada;
+    }
+
+    public void setLlegada(Date llegada) {
+        this.llegada = llegada;
     }
 }
