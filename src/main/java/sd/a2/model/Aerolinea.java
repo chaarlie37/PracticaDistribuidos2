@@ -14,12 +14,12 @@ public class Aerolinea {
     private String codigo;
     private String web;
     private String telefono;
-    private int valoracion;
+    private double valoracion;
 
     public Aerolinea() {
     }
 
-    public Aerolinea(String nombre, String codigo, String web, String telefono, int valoracion) {
+    public Aerolinea(String nombre, String codigo, String web, String telefono, double valoracion) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.web = web;
@@ -59,7 +59,7 @@ public class Aerolinea {
         this.telefono = telefono;
     }
 
-    public int getValoracion() {
+    public double getValoracion() {
         return valoracion;
     }
 

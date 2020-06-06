@@ -40,10 +40,10 @@ public class VueloController {
     @PostConstruct
     public void init(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        Aerolinea iberia = new Aerolinea("Iberia", "IB", "www.iberia.com", "901111500", 0);
-        Aerolinea ryanair = new Aerolinea("Ryanair", "FR", "www.ryanair.com", "918294840", 0);
-        Aerolinea british = new Aerolinea("British Airways", "BA", "www.ba.com", "912754779", 0);
-        Aerolinea aireuropa = new Aerolinea("Air Europa", "UX", "www.aireuropa.com", "911401501", 0);
+        Aerolinea iberia = new Aerolinea("Iberia", "IB", "http://www.iberia.com", "901111500", 4.5);
+        Aerolinea ryanair = new Aerolinea("Ryanair", "FR", "http://www.ryanair.com", "918294840", 2.7);
+        Aerolinea british = new Aerolinea("British Airways", "BA", "http://www.ba.com", "912754779", 4.2);
+        Aerolinea aireuropa = new Aerolinea("Air Europa", "UX", "http://www.aireuropa.com", "911401501", 3.9);
         aerolineaRepository.save(iberia);
         aerolineaRepository.save(ryanair);
         aerolineaRepository.save(british);

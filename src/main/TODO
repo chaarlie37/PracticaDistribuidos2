@@ -1,5 +1,4 @@
 - Vuelos de sólo ida
-- Poner los Dialog con diseño adaptados a cada aerolínea para hacer clic
 - Diseños / iconos
 - Radio buttons bonitos
 - Datepickers decentes
@@ -11,3 +10,4 @@
 - Iconos
 - Cabecera de web (logo?)
 - Buscar vuelos por cuidad (todos los aeropuertos) ???
+- Restringir buscar con campos vacíos!!

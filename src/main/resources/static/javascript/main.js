@@ -16,15 +16,9 @@ $(function () {
     var aerolinea = $("#aerolinea");
     var puntuacion = $("#rateYo")
     var barra_fecha = $(".barra-fecha");
+    var aerolineas = []
 
-   puntuacion.rateYo({
-        starWidth: "20px",
-        numStars: 5,
-        rating: 4.5,
-        halfStar: true,
-        readOnly:true,
 
-      });
 
 
    $("#abrir").on("click", function () {
@@ -42,6 +36,7 @@ $(function () {
    })
 
     boton.on('click', f)
+
     radio_soloida.on('click', function () {
         fecha_vuelta.hide();
         $('#destino.barra-busqueda').css({
@@ -60,44 +55,10 @@ $(function () {
     });
 
 
-    /*
-    barra_fecha.on("mouseleave", function () {
-        if ($(this).val() == "") {
-            $(this).prop('type', 'text');
-        }
-    });
-*/
-
-    $("#dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        minHeight:200,
-        minWidth:700,
-        draggable:false,
-        buttons: {
-            "Cerrar": function () {
-                $(this).dialog("close");
-            }
-        }
-    });
-
     lista.on('click', '.aerolinea', function () {
-        var dialogo = $('#aerolinea-' + $(this).attr('id'))
-        dialogo.dialog({
-            autoOpen: false,
-            modal: true,
-            buttons: {
-                "Cerrar": function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-        dialogo.dialog("open");
+        var dialogo_aerolinea = $('#aerolinea-' + $(this).attr('id'));
+        dialogo_aerolinea.dialog("open");
     })
-
-
-
-
 
 
     function ParejaVuelos(ida, vuelta, precio) {
@@ -105,6 +66,16 @@ $(function () {
         this.vuelta = vuelta;
         this.precio = precio;
     }
+
+    $.getJSON("/aerolineas/", function (respuesta) {
+        var lista = [];
+        $.each(respuesta, function (i, item) {
+            lista.push(item);
+        })
+        guardar_aerolineas(lista);
+    });
+
+
 
     var aeropuertos = new Array();
     $.getJSON("/aeropuertos/", function (respuesta) {
@@ -152,24 +123,6 @@ $(function () {
             });
         }
     }
-
-    /*function dialogo(){
-                $("#dialog").dialog({
-                autoOpen: false,
-                modal: true,
-                buttons: {
-                    "Cerrar": function () {
-                        $(this).dialog("close");
-                    }
-                }
-                });
-                $("#abrir").button().click(function () {
-                    $("#dialog").dialog("option", "width", 600);
-                    $("#dialog").dialog("option", "height", 300);
-                    $("#dialog").dialog("open");
-                });
-    });
-    */
 
 
 
@@ -267,11 +220,14 @@ $(function () {
                     "                <h3 class=\"h3\">" + precio + "€</h3>\n" +
                     "            </div>" +
                     "        </div>");
-                dialogo.append($('<div id="aerolinea-' + pareja.ida.aerolinea.codigo + '">').html(pareja.ida.aerolinea.nombre + " " + pareja.ida.aerolinea.codigo + " " + pareja.ida.aerolinea.telefono + " " + pareja.ida.aerolinea.web));
-                dialogo.append($('<div id="aerolinea-' + pareja.vuelta.aerolinea.codigo + '">').html(pareja.vuelta.aerolinea.nombre + " " + pareja.vuelta.aerolinea.codigo + " " + pareja.vuelta.aerolinea.telefono + " " + pareja.vuelta.aerolinea.web));
-
             }
         }
+        if(parejas_vuelos.length < 3){
+            $('.contenido').css("padding-bottom", "18%");
+        }
+        $('html, body').animate({
+            scrollTop: $('.contenido').offset().top
+        },1000);
     }
 
     function guardar_aeropuertos(l) {
@@ -296,6 +252,74 @@ $(function () {
                 }
             }
         });
+    }
+
+    function guardar_aerolineas(l) {
+        aerolineas = l;
+        for (var i = 0; i<aerolineas.length; i++){
+            console.log("codigooo: " + aerolineas[i].codigo);
+            dialogo.append('<div id="aerolinea-' + aerolineas[i].codigo + '">\n' +
+                '        <div class="dialogo-aerolinea">\n' +
+                '            <h3 class="h2">' + aerolineas[i].nombre + ' (' + aerolineas[i].codigo + ')</h3>\n' +
+                '            <div class="info-aerolinea">\n' +
+                '                <div>\n' +
+                '                    <div class="atributo-aerolinea">\n' +
+                '                        <span class="icono-info material-icons">language</span>\n' +
+                '                        <div class="titulo-info">\n' +
+                '                            <span class="titulo-atributo-aerolinea">Página web</span>\n' +
+                '                            <a href="' + aerolineas[i].web + '">' + aerolineas[i].web + '</a>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="atributo-aerolinea">\n' +
+                '                        <span class="icono-info material-icons">phone</span>\n' +
+                '                        <div class="titulo-info">\n' +
+                '                            <span class="titulo-atributo-aerolinea">Atención al cliente</span>\n' +
+                '                            <span>' + aerolineas[i].telefono + '</span>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="atributo-aerolinea">\n' +
+                '                        <span class="icono-info material-icons">grade</span>\n' +
+                '                        <div class="titulo-info">\n' +
+                '                            <span class="titulo-atributo-aerolinea">Valoración</span>\n' +
+                '                            <div class="valoracion">\n' +
+                '                                <div id="rateYo-' + aerolineas[i].codigo + '">\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '\n' +
+                '                </div>\n' +
+                '                <div class="logo-aerolinea">\n' +
+                '                    <img src="/images/' + aerolineas[i].codigo + '.png" height="100rem">\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '\n' +
+                '\n' +
+                '\n' +
+                '\n' +
+                '        </div>\n' +
+                '    </div>');
+            $('#rateYo-' + aerolineas[i].codigo).rateYo({
+                starWidth: "20px",
+                numStars: 5,
+                rating: aerolineas[i].valoracion,
+                halfStar: true,
+                readOnly:true,
+            });
+            var dialogo_aerolinea = $('#aerolinea-' + aerolineas[i].codigo);
+            dialogo_aerolinea.dialog({
+                autoOpen: false,
+                modal: true,
+                minHeight:200,
+                minWidth:700,
+                draggable:false,
+                buttons: {
+                    "Cerrar": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
     }
 
     function formatear_hora(d) {
