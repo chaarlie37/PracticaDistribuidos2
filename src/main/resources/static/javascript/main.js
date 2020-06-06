@@ -17,7 +17,9 @@ $(function () {
     var puntuacion = $("#rateYo")
     var barra_fecha = $(".barra-fecha");
     var aerolineas = []
-
+    var cabecera_vuelos = $('#cabecera-vuelos');
+    var contenido = $('.contenido');
+    var boton_volver = $('#btn-volver');
 
 
 
@@ -37,12 +39,23 @@ $(function () {
 
     boton.on('click', f)
 
+    boton_volver.on('click', function () {
+        $('html, body').animate({
+            scrollTop: $('html, body').offset().top
+        },1000);
+        console.log("volver");
+        origen.val("");
+        destino.val("");
+        fecha_ida.val("");
+        fecha_vuelta.val("");
+    });
+
     radio_soloida.on('click', function () {
         fecha_vuelta.hide();
         $('#destino.barra-busqueda').css({
             "border-bottom-right-radius": "0.50rem"
         });
-    })
+    });
     radio_idavuelta.on('click', function () {
         fecha_vuelta.show();
         $('#destino.barra-busqueda').css({
@@ -88,6 +101,7 @@ $(function () {
 
 
     function f() {
+
         var url = "/vuelos/" + fecha_ida.val() + "/" + encodeURI(origen.val()) + "/" + encodeURI(destino.val());
         console.log(url);
         if (origen.val() === "" || destino.val() === "")
@@ -147,6 +161,25 @@ $(function () {
 
     function mostrar_parejas_vuelos() {
         lista.empty();
+        cabecera_vuelos.empty();
+        cabecera_vuelos.append('<div class="cabecera-vuelos">\n' +
+            '    <div class="origen-destino">\n' +
+            '        <div class="origen-fecha-cabecera">\n' +
+            '            <h5 class="texto-cabecera">' + vuelos_ida[0].origen.nombre + '</h5>\n' +
+            '            <h5 class="texto-cabecera">' + formatear_fecha(vuelos_ida[0].salida) + '</h5>\n' +
+            '        </div>\n' +
+            '        <div class="iconos-cabecera">\n' +
+            '            <span class="texto-cabecera icono-info material-icons">sync_alt</span>\n' +
+            '            <span class="texto-cabecera icono-info material-icons">today</span>\n' +
+            '        </div>\n' +
+            '        <div class="destino-fecha-cabecera">\n' +
+            '            <h5 class="texto-cabecera">' + vuelos_vuelta[0].origen.nombre + '</h5>\n' +
+                '            <h5 class="texto-cabecera">' + formatear_fecha(vuelos_vuelta[0].salida) + '</h5>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>');
+        $('.zona-boton-vuelos').css("display", "flex");
+        $('.zona-boton-vuelos').fadeIn();
         for (var i = 0; i<vuelos_ida.length; i++){
             for (var j = 0; j<vuelos_vuelta.length; j++){
                 var precio = vuelos_ida[i].precio + vuelos_vuelta[j].precio;
@@ -226,8 +259,9 @@ $(function () {
             $('.contenido').css("padding-bottom", "18%");
         }
         $('html, body').animate({
-            scrollTop: $('.contenido').offset().top
+            scrollTop: cabecera_vuelos.offset().top
         },1000);
+        contenido.fadeIn();
     }
 
     function guardar_aeropuertos(l) {
@@ -325,6 +359,11 @@ $(function () {
     function formatear_hora(d) {
         var fecha = new Date(d);
         return new Intl.DateTimeFormat('es', { hour: '2-digit', minute: '2-digit' }).format(fecha);
+    }
+
+    function formatear_fecha(d) {
+        var fecha = new Date(d);
+        return new Intl.DateTimeFormat('es').format(fecha);
     }
 
     function formatear_duracion(min) {
