@@ -400,3 +400,47 @@
     justify-content: space-around;
 
 }
+
+.aerolinea{
+    cursor: pointer;
+}
+
+.titulo-atributo-aerolinea{
+    font-weight: 300;
+    font-size: 0.8rem;
+    height: 0.9rem;
+}
+
+.atributo-aerolinea{
+    display: flex;
+    width: 100%;
+}
+
+.info-aerolinea{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+
+.titulo-info{
+    display: grid;
+    padding-left: 1rem;
+}
+
+.logo-aerolinea{
+    display: grid;
+    align-content: center;
+    padding-left: 3rem;
+}
+
+.valoracion{
+    padding-top: 0.5rem;
+}
+
+.ui-dialog-titlebar {
+    display: none;
+}
+
+.dialogo-aerolinea{
+    padding: 2rem;
+}

@@ -23,9 +23,23 @@ $(function () {
         rating: 4.5,
         halfStar: true,
         readOnly:true,
+
       });
 
 
+   $("#abrir").on("click", function () {
+       var dialogo = $('#dialog')
+       dialogo.dialog({
+           autoOpen: false,
+           modal: true,
+           buttons: {
+               "Cerrar": function () {
+                   $(this).dialog("close");
+               }
+           }
+       });
+       dialogo.dialog("open");
+   })
 
     boton.on('click', f)
     radio_soloida.on('click', function () {
@@ -57,6 +71,9 @@ $(function () {
     $("#dialog").dialog({
         autoOpen: false,
         modal: true,
+        minHeight:200,
+        minWidth:700,
+        draggable:false,
         buttons: {
             "Cerrar": function () {
                 $(this).dialog("close");
