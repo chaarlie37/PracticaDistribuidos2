@@ -118,37 +118,156 @@ $(function () {
 
 
     function f() {
-        var url = "/vuelos/" + fecha_ida.val() + "/" + encodeURI(origen.val()) + "/" + encodeURI(destino.val());
-        if (origen.val() === "" || destino.val() === "")
-            url = "/vuelos/" + fecha_ida.val() + "/";
-        if (radio_idavuelta.is(':checked')){
-            console.log("AAAAAAAAAAA");
-            var url2 = "/vuelos/" + fecha_vuelta.val() + "/" + encodeURI(destino.val()) + "/" + encodeURI(origen.val());
-            $.getJSON(url, function (respuesta) {
-                var lista = [];
-                $.each(respuesta, function (i, item) {
-                    lista.push(item);
-                    console.log(item);
-                })
-                guardar_ida(lista);
+        var f1 = fecha_ida.val().split("-");
+        var f2 = fecha_vuelta.val().split("-");
+        if(new Date(f1[2], f1[1] - 1, f1[0]) > new Date(f2[2], f2[1] - 1, f2[0])){
+            contenido.fadeOut().promise().done(function () {
+                $('html, body').animate({
+                    scrollTop: cabecera_vuelos.offset().top
+                }, 1000);
+                lista.empty();
+                lista.append('<div class="cuadro-advertencia">\n' +
+                    '        <span class="material-icons texto-advertencia">warning</span>\n' +
+                    '        <div class="texto-advertencia">La fecha de ida es posterior a la fecha de vuelta. Inténtalo de nuevo.</div>\n' +
+                    '    </div>');
+                contenido.fadeIn();
             });
-            $.getJSON(url2, function (respuesta) {
-                var lista = [];
-                $.each(respuesta, function (i, item) {
-                    lista.push(item);
-                    console.log("v" + item);
-                })
-                guardar_vuelta(lista);
+        }
+        else if(origen.val() == destino.val() && origen.val() != ""){
+            contenido.fadeOut().promise().done(function () {
+                $('html, body').animate({
+                    scrollTop: cabecera_vuelos.offset().top
+                }, 1000);
+                lista.empty();
+                lista.append('<div class="cuadro-advertencia">\n' +
+                    '        <span class="material-icons texto-advertencia">warning</span>\n' +
+                    '        <div class="texto-advertencia">El destino no puede ser el mismo que el origen. Inténtalo de nuevo.</div>\n' +
+                    '    </div>');
+                contenido.fadeIn();
             });
         }else{
-            $.getJSON(url, function (respuesta) {
-                lista.empty();
-                $.each(respuesta, function (i, item) {
-                    lista.append($('<p>').html(item.codigo + " Origen: " + item.origen.nombre + " Destino: " + item.destino.nombre  + " Fecha: " + new Date(item.salida).toUTCString()));
-                    lista.append($('<p class="aerolinea" id="' + item.aerolinea.codigo + '">>').html(item.aerolinea.nombre));
-                    dialogo.append($('<div id="aerolinea-' + item.aerolinea.codigo + '">').html(item.aerolinea.nombre + " " + item.aerolinea.codigo + " " + item.aerolinea.telefono + " " + item.aerolinea.web));
-                })
-            });
+            var url = "/vuelos/" + fecha_ida.val() + "/" + encodeURI(origen.val()) + "/" + encodeURI(destino.val());
+            if (origen.val() === "" || destino.val() === "")
+                url = "/vuelos/" + fecha_ida.val() + "/";
+            if (radio_idavuelta.is(':checked')){
+                if(origen.val() == "" || destino.val() == "" || fecha_ida.val() == "" || fecha_vuelta.val() == ""){
+                    contenido.fadeOut().promise().done(function () {
+                        $('html, body').animate({
+                            scrollTop: cabecera_vuelos.offset().top
+                        }, 1000);
+                        lista.empty();
+                        lista.append('<div class="cuadro-advertencia">\n' +
+                            '        <span class="material-icons texto-advertencia">warning</span>\n' +
+                            '        <div class="texto-advertencia">¡Cuidado! Te has dejado algún campo sin completar. Vuelve a intentarlo.</div>\n' +
+                            '    </div>');
+                        contenido.fadeIn();
+                    });
+                }else{
+                    var url2 = "/vuelos/" + fecha_vuelta.val() + "/" + encodeURI(destino.val()) + "/" + encodeURI(origen.val());
+                    $.getJSON(url, function (respuesta) {
+                        var lista = [];
+                        $.each(respuesta, function (i, item) {
+                            lista.push(item);
+                            console.log(item);
+                        })
+                        guardar_ida(lista);
+                    });
+                    $.getJSON(url2, function (respuesta) {
+                        var lista = [];
+                        $.each(respuesta, function (i, item) {
+                            lista.push(item);
+                            console.log("v" + item);
+                        })
+                        guardar_vuelta(lista);
+                    });
+                }
+            }else{
+                if(origen.val() == "" || fecha_ida.val() == ""){
+                    lista.empty();
+                    lista.append('<div class="cuadro-advertencia">\n' +
+                        '        <span class="material-icons texto-advertencia">warning</span>\n' +
+                        '        <div class="texto-advertencia">¡Cuidado! Te has dejado algún campo sin completar. Vuelve a intentarlo.</div>\n' +
+                        '    </div>');
+                }else {
+                    $.getJSON(url, function (respuesta) {
+                        contenido.fadeOut().promise().done(function () {
+                            $('html, body').animate({
+                                scrollTop: cabecera_vuelos.offset().top
+                            }, 1000);
+                            lista.empty();
+                            cabecera_vuelos.empty();
+                            $('.zona-boton-vuelos').css("display", "flex");
+                            $('.zona-boton-vuelos').fadeIn();
+                            if (respuesta == "") {
+                                lista.append('<div class="cuadro-advertencia">\n' +
+                                    '        <span class="material-icons texto-advertencia">warning</span>\n' +
+                                    '        <div class="texto-advertencia">Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>\n' +
+                                    '    </div>');
+                            }else{
+                                $('.contenido').css("padding-bottom", "28%");
+                                cabecera_vuelos.append('<div class="cabecera-vuelos">\n' +
+                                    '    <div class="origen-destino">\n' +
+                                    '        <div class="origen-fecha-cabecera">\n' +
+                                    '            <h5 class="texto-cabecera">' + origen.val() + '</h5>\n' +
+                                    '            <h5 class="texto-cabecera">' + fecha_ida.val() + '</h5>\n' +
+                                    '        </div>\n' +
+                                    '        <div class="iconos-cabecera">\n' +
+                                    '            <span class="texto-cabecera icono-info material-icons">arrow_right_alt</span>\n' +
+                                    '            <span class="texto-cabecera icono-info material-icons">today</span>\n' +
+                                    '        </div>' +
+                                    '        <div class="destino-fecha-cabecera">\n' +
+                                    '            <h5 class="texto-cabecera">' + destino.val() + '</h5>\n' +
+                                    '            <h5 class="texto-cabecera">' + fecha_ida.val() + '</h5>\n' +
+                                    '        </div>\n' +
+                                    '    </div>\n' +
+                                    '</div>');
+                                $.each(respuesta, function (i, item) {
+                                    var codigo_vuelo = item.codigo;
+                                    var aeropuerto_origen = item.origen.nombre;
+                                    var aeropuerto_destino = item.destino.nombre;
+                                    var duracion = formatear_duracion(item.duracion);
+                                    var hora_salida = formatear_hora(item.salida);
+                                    var hora_llegada = formatear_hora(item.llegada);
+                                    lista.append("<div class=\"zona-vuelo\">\n" +
+                                        "            <div class=\"pareja\">\n" +
+                                        "                <div class=\"vuelo\">\n" +
+                                        "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
+                                        "                        <img class=\"aerolinea\" id=\"" + item.aerolinea.codigo + "\" src=\"/images/" + item.aerolinea.codigo + ".png\" height=\"30px\">\n" +
+                                        "                        <div class=\"texto-codigo-vuelo\">" + codigo_vuelo + "</div>\n" +
+                                        "                    </div>\n" +
+                                        "                    <div class=\"duracion-icono\">\n" +
+                                        "                        <div class=\"texto-duracion\">" + duracion + "</div>\n" +
+                                        "                        <img src=\"/images/icono-viaje.png\" height=\"45px\">\n" +
+                                        "                    </div>\n" +
+                                        "                    <div class=\"detalles-vuelo\">\n" +
+                                        "                        <div class=\"grupo-horas-ubicaciones\">\n" +
+                                        "                            <div class=\"horas\">\n" +
+                                        "                                <div class=\"texto-hora\">" + hora_salida + "</div>\n" +
+                                        "                                <div class=\"texto-hora\">" + hora_llegada + "</div>\n" +
+                                        "                            </div>\n" +
+                                        "                            <div class=\"ubicaciones\">\n" +
+                                        "                                <div>\n" + aeropuerto_origen +
+                                        "                                </div>\n" +
+                                        "                                <div>\n" + aeropuerto_destino +
+                                        "                                </div>\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>\n" +
+                                        "                    </div>\n" +
+                                        "                </div>\n" +
+                                        "            </div>\n" +
+                                        "            <div class=\"precio\">\n" +
+                                        "                <h3 class=\"h3\">" + item.precio + "€</h3>\n" +
+                                        "            </div>" +
+                                        "        </div>");
+
+                                });
+                            }
+                            contenido.fadeIn();
+                        });
+                    });
+                }
+
+            }
         }
     }
 
@@ -178,7 +297,10 @@ $(function () {
             lista.empty();
             cabecera_vuelos.empty();
             if (vuelos_ida.length == 0){
-                cabecera_vuelos.append('<div class="cabecera-vuelos">Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>');
+                lista.append('<div class="cuadro-advertencia">\n' +
+                    '        <span class="material-icons texto-advertencia">warning</span>\n' +
+                    '        <div class="texto-advertencia">Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>\n' +
+                    '    </div>');
             }else{
                 cabecera_vuelos.append('<div class="cabecera-vuelos">\n' +
                     '    <div class="origen-destino">\n' +
@@ -201,7 +323,9 @@ $(function () {
                 for (var i = 0; i<vuelos_ida.length; i++){
                     for (var j = 0; j<vuelos_vuelta.length; j++){
                         var precio = vuelos_ida[i].precio + vuelos_vuelta[j].precio;
+                        var precio_sin_descuento = "";
                         if(vuelos_ida[i].aerolinea.codigo === vuelos_vuelta[j].aerolinea.codigo){
+                            precio_sin_descuento = precio + "€";
                             precio = precio * 0.80;
                         }
                         var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio);
@@ -225,7 +349,7 @@ $(function () {
                             "                    </div>\n" +
                             "                    <div class=\"duracion-icono\">\n" +
                             "                        <div class=\"texto-duracion\">" + duracion_ida + "</div>\n" +
-                            "                        <img src=\"/images/union.svg\" height=\"30px\">\n" +
+                            "                        <img src=\"/images/icono-viaje.png\" height=\"45px\">\n" +
                             "                    </div>\n" +
                             "                    <div class=\"detalles-vuelo\">\n" +
                             "                        <div class=\"grupo-horas-ubicaciones\">\n" +
@@ -249,7 +373,7 @@ $(function () {
                             "                    </div>\n" +
                             "                    <div class=\"duracion-icono\">\n" +
                             "                        <div class=\"texto-duracion\">" + duracion_vuelta + "</div>\n" +
-                            "                        <img src=\"/images/union.svg\" height=\"30px\">\n" +
+                            "                        <img src=\"/images/icono-viaje.png\" height=\"45px\">\n" +
                             "                    </div>\n" +
                             "                    <div class=\"detalles-vuelo\">\n" +
                             "                        <div class=\"grupo-horas-ubicaciones\">\n" +
@@ -268,13 +392,14 @@ $(function () {
                             "                </div>\n" +
                             "            </div>\n" +
                             "            <div class=\"precio\">\n" +
-                            "                <h3 class=\"h3\">" + precio + "€</h3>\n" +
+                            "                <h3 class=\"precio-sin-descuento\">" + precio_sin_descuento + "</h3>\n" +
+                            "                <h4 class=\"h3\">" + precio + "€</h4>\n" +
                             "            </div>" +
                             "        </div>");
                     }
                 }
                 if(parejas_vuelos.length < 3){
-                    $('.contenido').css("padding-bottom", "18%");
+                    $('.contenido').css("padding-bottom", "28%");
                 }
             }
             contenido.fadeIn();

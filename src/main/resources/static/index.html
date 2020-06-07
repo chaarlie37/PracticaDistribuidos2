@@ -18,7 +18,7 @@
 
 
 
-    <title>Vuelos</title>
+    <title>FlightFinder</title>
 </head>
 <body>
 <!--
@@ -46,6 +46,7 @@
 -->
 
 <div class="zona-busqueda">
+    <img src="images/logo.png" height="120px">
     <h1 class="h3">¿A dónde quieres ir?</h1>
         <form>
             <div class="input-group barras-busqueda">
@@ -78,6 +79,7 @@
                 </div>
                 <div class="btn btn-primary" id="btn-enviar">
                     Buscar
+                    <span class="material-icons">search</span>
                 </div>
             </div>
         </form>
@@ -105,11 +107,17 @@
 </div>
 -->
 <div class="contenido">
-
+<!--
+    <div class="cuadro-error">
+        <span class="material-icons texto-advertencia">warning</span>
+        <div>Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>
+    </div>
+-->
     <div class="zona-boton-vuelos">
         <span>Estos son los vuelos disponibles:</span>
         <div class="btn btn-secondary" id="btn-volver">
             Volver a buscar
+            <span class="material-icons">arrow_upward</span>
         </div>
     </div>
     <div id="lista">

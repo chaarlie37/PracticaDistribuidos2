@@ -132,6 +132,7 @@
 .texto-advertencia{
     font-weight: 500;
     color: #79631fc7;
+    padding-left: 0.5rem;
 }
 
 .cuadro-error{
@@ -196,10 +197,9 @@
 /*************************************************************/
 
 .zona-busqueda{
-    padding-top: 8rem;
     padding-bottom: 4rem;
-    padding-left: 25%;
-    padding-right: 25%;
+    padding-left: 20%;
+    padding-right: 20%;
     display: block;
     border-style: solid;
     border-width: thin;
@@ -326,7 +326,6 @@
     padding-left: 0.5rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    align-items: end;
 }
 
 .hora-aeropuerto{
@@ -338,8 +337,8 @@
 .contenido{
     display: none;
     width: 100%;
-    padding-right: 25%;
-    padding-left: 25%;
+    padding-right: 20%;
+    padding-left: 20%;
     padding-top: 2rem;
 }
 
@@ -376,6 +375,7 @@
     margin-bottom: auto;
     padding-right: 3rem;
     padding-left: 3rem;
+    text-align: center;
 }
 
 .pareja{
@@ -388,11 +388,13 @@
     text-align: center;
     width: 2rem;
     display: grid;
-    align-items: center;
+    align-items: baseline;
+    padding-right: 3rem;
 }
 
 .texto-hora{
     font-weight: 700;
+    display: inline-flex;
 }
 
 .texto-codigo-vuelo{
@@ -493,4 +495,11 @@
     display: none;
     justify-content: space-between;
     align-items: center;
+}
+
+.precio-sin-descuento{
+    font-size: large;
+    font-weight: 300;
+    color: #b52c39;
+    text-decoration: line-through;
 }
