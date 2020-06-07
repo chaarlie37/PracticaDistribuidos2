@@ -47,7 +47,6 @@
 
 <div class="zona-busqueda">
     <h1 class="h3">¿A dónde quieres ir?</h1>
-
         <form>
             <div class="input-group barras-busqueda">
                 <div class="grupo-aeropuerto-fecha">
@@ -71,9 +70,11 @@
                 </div>
             </div>
             <div class="radio-y-boton-busqueda">
-                <div class="radio-button-group">
-                    <input class="radio" type="radio" name="idavuelta" id="ida-vuelta" checked="checked"><span class="radio">Ida y vuelta</span>
-                    <input class="radio" type="radio" name="idavuelta" id="solo-ida"><span class="radio">Sólo ida</span>
+                <div>
+                    <label for="ida-vuelta">Ida y vuelta</label>
+                    <input class="radio" type="radio" name="idavuelta" id="ida-vuelta" checked="checked">
+                    <label for="solo-ida">Sólo ida</label>
+                    <input class="radio" type="radio" name="idavuelta" id="solo-ida">
                 </div>
                 <div class="btn btn-primary" id="btn-enviar">
                     Buscar

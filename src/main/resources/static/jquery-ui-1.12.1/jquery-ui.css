@@ -164,6 +164,7 @@
 	right: 0;
 }
 .ui-button {
+	/*
 	padding: .4em 1em;
 	display: inline-block;
 	position: relative;
@@ -179,6 +180,25 @@
 
 	/* Support: IE <= 11 */
 	overflow: visible;
+
+
+	display: inline-block;
+	font-weight: 400;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: 0.25rem;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	cursor: pointer;
 }
 
 .ui-button,
@@ -304,8 +324,9 @@ button.ui-button::-moz-focus-inner {
 .ui-checkboxradio-radio-label.ui-checkboxradio-checked .ui-icon,
 .ui-checkboxradio-radio-label.ui-checkboxradio-checked:hover .ui-icon {
 	background-image: none;
-	width: 8px;
-	height: 8px;
+	/* width: 8px;
+	 height: 8px;
+	 */
 	border-width: 4px;
 	border-style: solid;
 }
@@ -365,6 +386,9 @@ button.ui-button::-moz-focus-inner {
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
 	width: 45%;
+	border-radius: 5px;
+	padding: 0.1rem;
+	margin: 0.2rem;
 }
 .ui-datepicker table {
 	width: 100%;
@@ -373,6 +397,7 @@ button.ui-button::-moz-focus-inner {
 	margin: 0 0 .4em;
 }
 .ui-datepicker th {
+	background-color: white;
 	padding: .7em .3em;
 	text-align: center;
 	font-weight: bold;
@@ -929,10 +954,9 @@ body .ui-tooltip {
 works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
-	border: 1px solid #c5c5c5;
-	background: #f6f6f6;
 	font-weight: normal;
 	color: #454545;
+	border-radius: 5px;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -952,10 +976,10 @@ a:visited.ui-button,
 .ui-widget-header .ui-state-focus,
 .ui-button:hover,
 .ui-button:focus {
-	border: 1px solid #cccccc;
-	background: #ededed;
+	background: #007bff;
 	font-weight: normal;
-	color: #2b2b2b;
+	color: #e9ecef;
+	border-radius: 5px;
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,
@@ -980,7 +1004,6 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	border: 1px solid #003eff;
 	background: #007fff;
 	font-weight: normal;
 	color: #ffffff;
@@ -1002,9 +1025,9 @@ a.ui-button:active,
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-	border: 1px solid #dad55e;
-	background: #fffa90;
-	color: #777620;
+	border: 1px solid #939393;
+	background: #c5c5c5;
+	color: #2a2a2a;
 }
 .ui-state-checked {
 	border: 1px solid #dad55e;

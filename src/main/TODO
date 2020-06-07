@@ -1,9 +1,9 @@
 - Vuelos de sólo ida
 - Diseños / iconos
-- Radio buttons bonitos
-- Datepickers decentes
 - ¿Poner descuento en lo de misma aerolinea?
 - Iconos
 - Cabecera de web (logo?)
 - Buscar vuelos por cuidad (todos los aeropuertos) ???
 - Restringir buscar con campos vacíos!!
+- Error de no hay vuelos
+- No permitir poner una fecha de vuelta anterior a la ida

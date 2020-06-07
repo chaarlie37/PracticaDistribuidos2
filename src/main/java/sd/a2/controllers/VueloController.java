@@ -85,7 +85,7 @@ public class VueloController {
 
     @RequestMapping(value = "/vuelos/{fecha}", method = RequestMethod.GET)
     public List<Vuelo> getVuelosFecha(@PathVariable("fecha") String fecha){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         System.out.println("FECHA");
         try{
             System.out.println(simpleDateFormat.parse(fecha));
@@ -101,7 +101,7 @@ public class VueloController {
         Aeropuerto aeropuertoDestino = aeropuertoService.getAeropuerto(destino);
         System.out.println(origen);
         System.out.println(destino);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try{
             System.out.println(simpleDateFormat.parse(fecha));
             return vuelosService.getVuelosFechaOrigenDestino(simpleDateFormat.parse(fecha), aeropuertoOrigen, aeropuertoDestino);
