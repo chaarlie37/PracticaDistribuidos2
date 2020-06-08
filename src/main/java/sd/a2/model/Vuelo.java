@@ -1,6 +1,5 @@
 package sd.a2.model;
 
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,19 +11,19 @@ public class Vuelo{
     private Integer id;
     private String codigo;
     private Date salida;
-    private Date llegada;
+    private Date llegada;   // hemos añadido tambien un atributo de llegada por sencillez a la hora de mostrar la hora de llegada
     private int duracion;  // en minutos
     private int precio;  // euros
-    @ManyToOne
-    private Aerolinea aerolinea;
-    private String origen;
-    private String destino;
+    private String aerolinea; // codigo de la aerolinea
+    private String origen;  // nombre del aeropuerto
+    private String destino;  // nombre del aeropuerto
 
     public Vuelo(){}
 
-    public Vuelo(String codigo, Date salida, int duracion, int precio, Aerolinea aerolinea, String origen, String destino) {
+    public Vuelo(String codigo, Date salida, int duracion, int precio, String aerolinea, String origen, String destino) {
         this.codigo = codigo;
         this.salida = salida;
+        // Se usa la clase Calendar para calcular el Date llegada a partir de la duracion
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(salida);
         calendar.add(Calendar.MINUTE, duracion);
@@ -76,11 +75,11 @@ public class Vuelo{
         this.id = id;
     }
 
-    public Aerolinea getAerolinea() {
+    public String getAerolinea() {
         return aerolinea;
     }
 
-    public void setAerolinea(Aerolinea aerolinea) {
+    public void setAerolinea(String aerolinea) {
         this.aerolinea = aerolinea;
     }
 

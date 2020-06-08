@@ -13,38 +13,34 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
+// Clase auxiliar para gestionar el respositorio de vuelos
 public class VuelosService {
 
     @Autowired
+    // Repositorio de vuelos
     private VueloRepository vueloRepository;
-    @Autowired
-    private AerolineaRepository aerolineaRepository;
-    @Autowired
-    private AeropuertoRepository aeropuertoRepository;
 
     public VuelosService(){
 
     }
 
+    // Devolver un vuelo dado su codigo
     public Vuelo getVuelo(String codigo){
         return vueloRepository.findByCodigo(codigo);
     }
 
-    public List<Vuelo> getVuelosFecha(Date fecha){
-        Date finDia = new Date(fecha.getTime() + 24 * 3600 * 1000 - 1);
-        return vueloRepository.findBySalidaBetween(fecha, finDia);
-    }
 
+    // Devolver vuelos dada una fecha, origen y destino
     public List<Vuelo> getVuelosFechaOrigenDestino(Date fecha, String origen, String destino){
+        // Como DATE incluye la hora, hay que consultar los vuelos entre dos "fechas",
+        // la fecha dada a las 00:00 y la fecha dada a las 23:59 (es decir, las 24h que dura el dia)
         Date finDia = new Date(fecha.getTime() + 24 * 3600 * 1000 - 1);
         return vueloRepository.findBySalidaBetweenAndOrigenAndDestino(fecha, finDia, origen, destino);
     }
 
-
+    // Devolver todos los vuelos
     public List<Vuelo> getVuelos(){
         return vueloRepository.findAll();
     }
-
-
 
 }

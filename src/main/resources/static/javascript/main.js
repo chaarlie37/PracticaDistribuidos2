@@ -165,7 +165,7 @@ $(function () {
                                 // También, aparece la aerolínea (logo en vez de texto, por estética), el cual es clickable para ver los
                                 // detalles de la aerolínea en un dialog.
                                 $.each(respuesta, function (i, item) {
-                                    var codigo_aerolinea = item.aerolinea.codigo;
+                                    var codigo_aerolinea = item.aerolinea;
                                     var codigo_vuelo = item.codigo;
                                     var aeropuerto_origen = item.origen;
                                     var aeropuerto_destino = item.destino;
@@ -407,14 +407,14 @@ $(function () {
                         // hacer el descuento del 20%
                         var precio = vuelos_ida[i].precio + vuelos_vuelta[j].precio;
                         var precio_sin_descuento = "";
-                        if (vuelos_ida[i].aerolinea.codigo === vuelos_vuelta[j].aerolinea.codigo) {
+                        if (vuelos_ida[i].aerolinea === vuelos_vuelta[j].aerolinea) {
                             precio_sin_descuento = precio + "€";
                             precio = precio * 0.80;
                         }
                         var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio);
                         parejas_vuelos.push(pareja);
-                        var codigo_aerolinea_ida = pareja.ida.aerolinea.codigo;
-                        var codigo_aerolinea_vuelta = pareja.vuelta.aerolinea.codigo;
+                        var codigo_aerolinea_ida = pareja.ida.aerolinea;
+                        var codigo_aerolinea_vuelta = pareja.vuelta.aerolinea;
                         var codigo_ida = pareja.ida.codigo;
                         var codigo_vuelta = pareja.vuelta.codigo;
                         var aeropuerto_origen = pareja.ida.origen;

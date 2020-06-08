@@ -7,8 +7,8 @@ import sd.a2.model.Aeropuerto;
 import java.util.List;
 
 public interface AeropuertoRepository extends JpaRepository<Aeropuerto, Integer> {
-    Aeropuerto findByCodigo(String codigo);
+    // Devolver todos los aeropuertos
     List<Aeropuerto> findAll();
-    List<Aeropuerto> findByCiudadIgnoreCase(String ciudad);
+    // Devolver un aeropuerto dado su nombre
     Aeropuerto findByNombre(String nombre);
 }

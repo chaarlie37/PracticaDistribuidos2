@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+// Hemos llamado Aerolinea a las compañias aereas por la sencillez del nombre
 public class Aerolinea {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -10,8 +10,12 @@ import java.util.List;
 
 @Repository
 public interface VueloRepository extends JpaRepository<Vuelo, Integer> {
+      // Devolver un vuelo dado su codigo
       Vuelo findByCodigo(String codigo);
+      // Devolver todos los vuelos
       List<Vuelo> findAll();
-      List<Vuelo> findBySalidaBetween(Date inicio, Date fin);
+      // Devolver vuelos dada una fecha, origen y destino
+      // Como DATE incluye la hora, hay que consultar los vuelos entre dos "fechas",
+      // la fecha dada a las 00:00 y la fecha dada a las 23:59 (es decir, las 24h que dura el dia)
       List<Vuelo> findBySalidaBetweenAndOrigenAndDestino(Date inicio, Date fin, String origen, String destino);
 }
