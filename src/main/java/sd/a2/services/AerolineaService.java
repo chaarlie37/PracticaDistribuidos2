@@ -16,11 +16,6 @@ public class AerolineaService {
     public AerolineaService(){
     }
 
-    // Devolver una aerolinea dado su codigo
-    public Aerolinea getAerolinea(String codigo){
-        return aerolineaRepository.findByCodigo(codigo);
-    }
-
     // Devolver todas las aerolineas
     public List<Aerolinea> getAerolineas(){
         return aerolineaRepository.findAll();

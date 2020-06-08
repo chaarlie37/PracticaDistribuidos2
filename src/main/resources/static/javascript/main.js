@@ -179,7 +179,7 @@ $(function () {
                                         "            <div class=\"pareja\">\n" +
                                         "                <div class=\"vuelo\">\n" +
                                         "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
-                                        "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea + "\" src=\"/images/" + codigo_aerolinea + ".png\" height=\"30px\">\n" +
+                                        "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea + "\" src=\"/images/" + codigo_aerolinea + ".png\" title=\"Ver detalles de aerolinea\" height=\"30px\">\n" +
                                         "                        <div class=\"texto-codigo-vuelo\">" + codigo_vuelo + "</div>\n" +
                                         "                    </div>\n" +
                                         "                    <div class=\"duracion-icono\">\n" +
@@ -294,15 +294,6 @@ $(function () {
         this.precio = precio;
     }
 
-    // Consulta al servicio web de las aerolíneas
-    $.getJSON('/aerolineas/', function (respuesta) {
-        var lista = [];
-        $.each(respuesta, function (i, item) {
-            lista.push(item);
-        })
-        guardar_aerolineas(lista);
-    });
-
     // Consulta al servicio web de los aeropuertos
     $.getJSON('/aeropuertos/', function (respuesta) {
         var lista = [];
@@ -310,6 +301,15 @@ $(function () {
             lista.push(item.nombre);
         })
         guardar_aeropuertos(lista);
+    });
+
+    // Consulta al servicio web de las aerolíneas
+    $.getJSON('/aerolineas/', function (respuesta) {
+        var lista = [];
+        $.each(respuesta, function (i, item) {
+            lista.push(item);
+        })
+        guardar_aerolineas(lista);
     });
 
     // Variables para saber cuándo se han cargado todos los vuelos. Para mostrarlos no es necesario, pero sí que se necesita
@@ -435,7 +435,7 @@ $(function () {
                                 "            <div class=\"pareja\">\n" +
                                 "                <div class=\"vuelo\">\n" +
                                 "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
-                                "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea_ida + "\" src=\"/images/" + codigo_aerolinea_ida + ".png\" height=\"30px\">\n" +
+                                "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea_ida + "\" src=\"/images/" + codigo_aerolinea_ida + ".png\" title=\"Ver detalles de aerolinea\" height=\"30px\">\n" +
                                 "                        <div class=\"texto-codigo-vuelo\">" + codigo_ida + "</div>\n" +
                                 "                    </div>\n" +
                                 "                    <div class=\"duracion-icono\">\n" +
@@ -459,7 +459,7 @@ $(function () {
                                 "                </div>\n" +
                                 "                <div class=\"vuelo\">\n" +
                                 "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
-                                "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea_vuelta + "\" src=\"/images/" + codigo_aerolinea_vuelta + ".png\" height=\"30px\">\n" +
+                                "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea_vuelta + "\" src=\"/images/" + codigo_aerolinea_vuelta + ".png\" title=\"Ver detalles de aerolinea\" height=\"30px\">\n" +
                                 "                        <div class=\"texto-codigo-vuelo\">" + codigo_vuelta + "</div>\n" +
                                 "                    </div>\n" +
                                 "                    <div class=\"duracion-icono\">\n" +
@@ -508,7 +508,7 @@ $(function () {
         origen.autocomplete({
             source: aeropuertos,
             autoFocus: true,
-            delay:0,
+            delay: 0,
             change: function (event, ui) {
                 if(!ui.item && origen.val() !== ""){
                     origen.val($('ul#ui-id-1 li:first div').text());

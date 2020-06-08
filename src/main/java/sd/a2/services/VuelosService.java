@@ -24,11 +24,6 @@ public class VuelosService {
 
     }
 
-    // Devolver un vuelo dado su codigo
-    public Vuelo getVuelo(String codigo){
-        return vueloRepository.findByCodigo(codigo);
-    }
-
 
     // Devolver vuelos dada una fecha, origen y destino
     public List<Vuelo> getVuelosFechaOrigenDestino(Date fecha, String origen, String destino){

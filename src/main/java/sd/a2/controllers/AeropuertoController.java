@@ -17,6 +17,8 @@ import java.util.List;
 
 @RestController
 // Controller para gestionar el servicio web y devolver datos sobre las aerolineas
+// Solo se han hecho metodos que se utilizan / necesitan en la pagina. Los que no se necesitan
+// no se han implementado (por ejemplo, devolver un aeropuerto por su nombre)
 public class AeropuertoController {
     @Autowired
     // Servicio que gestiona el repositorio
@@ -48,18 +50,9 @@ public class AeropuertoController {
     }
 
     // Devolver todos los aeropuertos
-    @RequestMapping(value = "/aeropuertos", method = RequestMethod.GET)
+    @RequestMapping(value = "/aeropuertos/", method = RequestMethod.GET)
     public List<Aeropuerto> getAeropuertos(){
         return aeropuertoService.getAeropuertos();
     }
-
-    // Devolver un aeropuerto dado su nombre
-    @RequestMapping(value= "/aeropuerto/{nombre}", method = RequestMethod.GET)
-    public Aeropuerto getAeropuerto(@PathVariable("nombre") String nombre){
-        return aeropuertoService.getAeropuerto(nombre);
-    }
-
-
-
 
 }

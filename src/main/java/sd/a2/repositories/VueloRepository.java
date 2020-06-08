@@ -10,8 +10,6 @@ import java.util.List;
 
 @Repository
 public interface VueloRepository extends JpaRepository<Vuelo, Integer> {
-      // Devolver un vuelo dado su codigo
-      Vuelo findByCodigo(String codigo);
       // Devolver todos los vuelos
       List<Vuelo> findAll();
       // Devolver vuelos dada una fecha, origen y destino

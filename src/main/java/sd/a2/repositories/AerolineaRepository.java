@@ -9,8 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AerolineaRepository extends JpaRepository<Aerolinea, Integer> {
-    // Devolver una aerolinea dado su codigo
-    Aerolinea findByCodigo(String codigo);
     // Devolver todas las aerolineas
     List<Aerolinea> findAll();
 }

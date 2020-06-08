@@ -20,6 +20,8 @@ import java.util.List;
 
 @RestController
 // Controller para gestionar el servicio web y devolver datos sobre las aerolineas
+// Solo se han hecho metodos que se utilizan / necesitan en la pagina. Los que no se necesitan
+// no se han implementado (por ejemplo, devolver todos los vuelos registrados)
 public class VueloController {
 
     @Autowired
@@ -77,25 +79,6 @@ public class VueloController {
         }
     }
 
-    // Devolver todos los vuelos
-    @RequestMapping(value = "/vuelos", method = RequestMethod.GET)
-    public List<Vuelo> getVuelos(){
-        return vuelosService.getVuelos();
-    }
-
-    /*
-    @RequestMapping(value = "/vuelos/{fecha}", method = RequestMethod.GET)
-    public List<Vuelo> getVuelosFecha(@PathVariable("fecha") String fecha){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.println("FECHA");
-        try{
-            System.out.println(simpleDateFormat.parse(fecha));
-            return vuelosService.getVuelosFecha(simpleDateFormat.parse(fecha));
-        } catch (ParseException e){
-            return null;
-        }
-    }
-    */
 
     // Devolver vuelos dada una fecha, origen y destino
     @RequestMapping(value = "/vuelos/{fecha}/{origen}/{destino}", method = RequestMethod.GET)
@@ -109,12 +92,5 @@ public class VueloController {
             return null;
         }
     }
-
-    // Devolver un vuelo dado su codigo
-    @RequestMapping(value = "/vuelo/{codigo}")
-    public Vuelo getVuelo(@PathVariable("codigo") String codigo){
-        return vuelosService.getVuelo(codigo);
-    }
-
 
 }
