@@ -17,14 +17,12 @@ public class Vuelo{
     private int precio;  // euros
     @ManyToOne
     private Aerolinea aerolinea;
-    @ManyToOne
-    private Aeropuerto origen;
-    @ManyToOne
-    private Aeropuerto destino;
+    private String origen;
+    private String destino;
 
     public Vuelo(){}
 
-    public Vuelo(String codigo, Date salida, int duracion, int precio, Aerolinea aerolinea, Aeropuerto origen, Aeropuerto destino) {
+    public Vuelo(String codigo, Date salida, int duracion, int precio, Aerolinea aerolinea, String origen, String destino) {
         this.codigo = codigo;
         this.salida = salida;
         Calendar calendar = Calendar.getInstance();
@@ -86,19 +84,19 @@ public class Vuelo{
         this.aerolinea = aerolinea;
     }
 
-    public Aeropuerto getOrigen() {
+    public String getOrigen() {
         return origen;
     }
 
-    public void setOrigen(Aeropuerto origen) {
+    public void setOrigen(String origen) {
         this.origen = origen;
     }
 
-    public Aeropuerto getDestino() {
+    public String getDestino() {
         return destino;
     }
 
-    public void setDestino(Aeropuerto destino) {
+    public void setDestino(String destino) {
         this.destino = destino;
     }
 

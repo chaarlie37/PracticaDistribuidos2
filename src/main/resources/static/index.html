@@ -2,67 +2,50 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <!-- CSS específico -->
     <link href="css/style.css" rel="stylesheet">
+    <!-- CSS de la plantilla -->
     <link href="css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap-grid.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap-reboot.css" rel="stylesheet">
-    <link href="css/bootstrap/business.css" rel="stylesheet">
-    <link href="css/bootstrap/table.css" rel="stylesheet">
+    <!-- Iconos Material Icons -->
     <link href="css/material-icons.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- CSS de JqueryUI y RateYo -->
     <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
-    <script src="javascript/main.js"></script>
+    <!-- Script de la página (main.js) y scripts de JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-
-
+    <script src="javascript/main.js"></script>
 
     <title>FlightFinder</title>
 </head>
 <body>
-<!--
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">Gestión de la Base de Datos</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/index.html">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cuadros">Cuadros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/clientes">Clientes</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
--->
-
+<!-- Div del banner de búsqueda. -->
 <div class="zona-busqueda">
     <img src="images/logo.png" height="120px">
     <h1 class="h3">¿A dónde quieres ir?</h1>
         <form>
+            <!-- Barras de búsqueda -->
             <div class="input-group barras-busqueda">
                 <div class="grupo-aeropuerto-fecha">
                     <div class="grupo-input-label">
+                        <!-- Campo origen -->
                         <input type="text" id="origen" name="origen" class="origen barra-busqueda ui-widget" placeholder="Origen">
                     </div>
                     <div class="controls">
+                        <!-- Campo fecha ida -->
                         <input type="text" id="fecha-ida" placeholder="Fecha de ida" class="origen barra-fecha">
                     </div>
                 </div>
                 <div class="grupo-aeropuerto-fecha">
                     <div class="grupo-input-label">
+                        <!-- Campo destino -->
                         <input type="text" id="destino" name="destino" class="destino barra-busqueda ui-widget" placeholder="Destino">
                     </div>
                     <div class="controls">
+                        <!-- Campo fecha de vuelta -->
                         <input type="text" id="fecha-vuelta" placeholder="Fecha de vuelta" class="destino barra-fecha">
                     </div>
                     <div>
@@ -70,6 +53,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Radio buttons y botón de buscar -->
             <div class="radio-y-boton-busqueda">
                 <div>
                     <label for="ida-vuelta">Ida y vuelta</label>
@@ -83,36 +67,13 @@
                 </div>
             </div>
         </form>
+</div>
 
-</div>
-<div id="cabecera-vuelos">
+<!-- Cabecera de zona donde sale la lista de vuelos. Aparece a modo de resumen el origen, destino y fechas seleccionadas en la búsqueda. -->
+<div id="cabecera-vuelos"></div>
 
-</div>
-<!--
-<div class="cabecera-vuelos">
-    <div class="origen-destino">
-        <div class="origen-fecha-cabecera">
-            <h5 class="texto-cabecera">Madrid (Adolfo Suárez - Madrid Barajas)</h5>
-            <h5 class="texto-cabecera">01/06/2020</h5>
-        </div>
-        <div class="iconos-cabecera">
-            <span class="texto-cabecera icono-info material-icons">sync_alt</span>
-            <span class="texto-cabecera icono-info material-icons">today</span>
-        </div>
-        <div class="destino-fecha-cabecera">
-            <h5 class="texto-cabecera">Berlin (Schönefeld)</h5>
-            <h5 class="texto-cabecera">02/06/2020</h5>
-        </div>
-    </div>
-</div>
--->
+<!-- Zona donde se muestra la lista de vuelos, avisos de errores y el botón para volver a hacer otra búsqueda. -->
 <div class="contenido">
-<!--
-    <div class="cuadro-error">
-        <span class="material-icons texto-advertencia">warning</span>
-        <div>Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>
-    </div>
--->
     <div class="zona-boton-vuelos">
         <span>Estos son los vuelos disponibles:</span>
         <div class="btn btn-secondary" id="btn-volver">
@@ -120,113 +81,10 @@
             <span class="material-icons">arrow_upward</span>
         </div>
     </div>
-    <div id="lista">
-<!--
-        <div class="zona-vuelo">
-            <div class="pareja">
-                <div class="vuelo">
-                    <div class="aerolinea-codigo-vuelo">
-                        <img src="/images/iberia.png" height="25px">
-                        <div class="texto-codigo-vuelo">IB0001</div>
-                    </div>
-                    <div class="duracion-icono">
-                        <div class="texto-duracion">2h</div>
-                        <img src="/images/union.svg" height="30px">
-                    </div>
-                    <div class="detalles-vuelo">
-                        <div class="grupo-horas-ubicaciones">
-                            <div class="horas">
-                                <div class="texto-hora">17:05</div>
-                                <div class="texto-hora">23:05</div>
-                            </div>
-                            <div class="ubicaciones">
-                                <div>
-                                    Madrid (Adolfo Suárez - Madrid Barajas)
-                                </div>
-                                <div>
-                                    Berlin (Schönefeld)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="vuelo">
-                    <div class="aerolinea-codigo-vuelo">
-                        <img src="/images/iberia.png" height="25px">
-                        <div class="texto-codigo-vuelo">IB0002</div>
-                    </div>
-                    <div class="duracion-icono">
-                        <div class="texto-duracion">2h</div>
-                        <img src="/images/union.svg" height="30px">
-                    </div>
-                    <div class="detalles-vuelo">
-                        <div class="grupo-horas-ubicaciones">
-                            <div class="horas">
-                                <div class="texto-hora">17:05</div>
-                                <div class="texto-hora">23:05</div>
-                            </div>
-                            <div class="ubicaciones">
-                                <div>
-                                    Berlin (Schönefeld)
-                                </div>
-                                <div>
-                                    Madrid (Adolfo Suárez - Madrid Barajas)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="precio">
-                <h3 class="h3">180€</h3>
-            </div>
-        </div>
--->
-
-    </div>
+    <!-- En este div se van añadiendo los vuelos -->
+    <div id="lista"></div>
+    <!-- En este div se añade el contenido de los dialog de JQuery, para mostrar la información de las compaías aéreas / aerolíneas -->
     <div id="dialog"></div>
-
-    <!--
-    <div class="dialogo-aerolinea">
-        <h3 class="h2">Iberia (IB)</h3>
-        <div class="info-aerolinea">
-            <div>
-                <div class="atributo-aerolinea">
-                    <span class="icono-info material-icons">language</span>
-                    <div class="titulo-info">
-                        <span class="titulo-atributo-aerolinea">Página web</span>
-                        <a href="www.iberia.com">www.iberia.com</a>
-                    </div>
-                </div>
-                <div class="atributo-aerolinea">
-                    <span class="icono-info material-icons">phone</span>
-                    <div class="titulo-info">
-                        <span class="titulo-atributo-aerolinea">Atención al cliente</span>
-                        <span>9160145784</span>
-                    </div>
-                </div>
-                <div class="atributo-aerolinea">
-                    <span class="icono-info material-icons">grade</span>
-                    <div class="titulo-info">
-                        <span class="titulo-atributo-aerolinea">Valoración</span>
-                        <div class="valoracion">
-                            <div id="rateY">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="logo-aerolinea">
-                <img src="/images/IB.png" height="100rem">
-            </div>
-        </div>
-
-
-
-
-    </div>
--->
 </div>
 </body>
 </html>

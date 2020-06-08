@@ -35,7 +35,7 @@ public class VuelosService {
         return vueloRepository.findBySalidaBetween(fecha, finDia);
     }
 
-    public List<Vuelo> getVuelosFechaOrigenDestino(Date fecha, Aeropuerto origen, Aeropuerto destino){
+    public List<Vuelo> getVuelosFechaOrigenDestino(Date fecha, String origen, String destino){
         Date finDia = new Date(fecha.getTime() + 24 * 3600 * 1000 - 1);
         return vueloRepository.findBySalidaBetweenAndOrigenAndDestino(fecha, finDia, origen, destino);
     }

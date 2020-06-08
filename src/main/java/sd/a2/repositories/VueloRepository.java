@@ -13,5 +13,5 @@ public interface VueloRepository extends JpaRepository<Vuelo, Integer> {
       Vuelo findByCodigo(String codigo);
       List<Vuelo> findAll();
       List<Vuelo> findBySalidaBetween(Date inicio, Date fin);
-      List<Vuelo> findBySalidaBetweenAndOrigenAndDestino(Date inicio, Date fin, Aeropuerto origen, Aeropuerto destino);
+      List<Vuelo> findBySalidaBetweenAndOrigenAndDestino(Date inicio, Date fin, String origen, String destino);
 }
