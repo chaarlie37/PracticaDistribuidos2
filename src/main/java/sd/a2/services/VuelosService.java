@@ -1,15 +1,9 @@
 package sd.a2.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sd.a2.model.Aerolinea;
-import sd.a2.model.Aeropuerto;
 import sd.a2.model.Vuelo;
-import sd.a2.repositories.AeropuertoRepository;
 import sd.a2.repositories.VueloRepository;
-import sd.a2.repositories.AerolineaRepository;
 import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component

@@ -2,7 +2,6 @@ package sd.a2.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sd.a2.model.Aeropuerto;
 import sd.a2.model.Vuelo;
 
 import java.util.Date;

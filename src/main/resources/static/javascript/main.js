@@ -1,7 +1,7 @@
 $(function () {
     var boton = $('#btn-enviar');
     var fecha_ida = $('#fecha-ida');
-    var fecha_vuelta = $('#fecha-vuelta')
+    var fecha_vuelta = $('#fecha-vuelta');
     var radio_idavuelta = $('#ida-vuelta');
     var radio_soloida = $('#solo-ida');
     var origen = $('#origen');
@@ -12,11 +12,47 @@ $(function () {
     var contenido = $('.contenido');
     var boton_volver = $('#btn-volver');
     var zona_boton_vuelos = $('.zona-boton-vuelos');
-    var aerolineas = []
+    var aerolineas = [];
     var vuelos_ida = [];
     var vuelos_vuelta = [];
     var parejas_vuelos = [];
     var aeropuertos = [];
+
+    // Datepickers de JQuery. Hemos considerado que son más estéticos y más cómodos que los que vienen en cada navegador.
+    // Están adaptados al español y a nuestro formato de fecha.
+    fecha_ida.datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd-mm-yy",
+        firstDay: 1,
+        closeText: 'Cerrar',
+        prevText: '<Ant',
+        nextText: 'Sig>',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá']
+    });
+    fecha_vuelta.datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd-mm-yy",
+        firstDay: 1,
+        closeText: 'Cerrar',
+        prevText: '<Ant',
+        nextText: 'Sig>',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá']
+    });
+
+    // Diseño de JQueryUI de los radiobuttons.
+    $('.radio').checkboxradio();
 
     /*
     Al hacer click en el botón de buscar, en función de si está seleccionado el radio button de ida o ida y vuelta,
@@ -40,6 +76,7 @@ $(function () {
                     scrollTop: cabecera_vuelos.offset().top
                 }, 1000);
                 lista.empty();
+                cabecera_vuelos.empty();
                 lista.append('<div class="cuadro-advertencia">\n' +
                     '           <span class="material-icons texto-advertencia">warning</span>\n' +
                     '           <div class="texto-advertencia">La fecha de ida es posterior a la fecha de vuelta. Inténtalo de nuevo.</div>\n' +
@@ -63,8 +100,6 @@ $(function () {
         }else{
             // Se generan las url dependiendo si el usuario ha seleccionado ida y vuelta o sólo ida.
             var url_ida = "/vuelos/" + fecha_ida.val() + "/" + encodeURI(origen.val()) + "/" + encodeURI(destino.val());
-            if (origen.val() === "" || destino.val() === "")
-                url_ida = "/vuelos/" + fecha_ida.val() + "/";
             // El usuario ha seleccionado ida y vuelta
             if (radio_idavuelta.is(':checked')){
                 // Comprobar que el usuario ha completado todos los campos requeridos.
@@ -109,7 +144,7 @@ $(function () {
             // El usuario ha seleccionado sólo ida
             }else{
                 // Comprobar que el usuario ha completado todos los campos
-                if(origen.val() === "" || fecha_ida.val() === ""){
+                if(origen.val() === "" || fecha_ida.val() === "" || destino.val() === ""){
                     lista.empty();
                     lista.append('<div class="cuadro-advertencia">\n' +
                         '        <span class="material-icons texto-advertencia">warning</span>\n' +
@@ -223,7 +258,6 @@ $(function () {
         $('html, body').animate({
             scrollTop: $('html, body').offset().top
         },1000);
-        console.log("volver");
         origen.val("");
         destino.val("");
         fecha_ida.val("");
@@ -245,54 +279,11 @@ $(function () {
         });
     })
 
-    // Datepickers de JQuery. Hemos considerado que son más estéticos y más cómodos que los que vienen en cada navegador.
-    // Están adaptados al español y a nuestro formato de fecha.
-    fecha_ida.datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: "dd-mm-yy",
-        firstDay: 1,
-        closeText: 'Cerrar',
-        prevText: '<Ant',
-        nextText: 'Sig>',
-        currentText: 'Hoy',
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá']
-    });
-    fecha_vuelta.datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: "dd-mm-yy",
-        firstDay: 1,
-        closeText: 'Cerrar',
-        prevText: '<Ant',
-        nextText: 'Sig>',
-        currentText: 'Hoy',
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá']
-    });
-
-    // Diseño de JQueryUI de los radiobuttons.
-    $('.radio').checkboxradio();
-
     // Al hacer click en el logotipo de la aerolínea en cada vuelo abre el dialog correspondiente.
     lista.on('click', '.aerolinea', function () {
         var dialogo_aerolinea = $('#aerolinea-' + $(this).attr('id'));
         dialogo_aerolinea.dialog("open");
-    })
-
-    // Constructor del objeto ParejaVuelos, necesario para mostrar las parejas de vuelos en ida y vuelta.
-    function ParejaVuelos(ida, vuelta, precio) {
-        this.ida = ida;
-        this.vuelta = vuelta;
-        this.precio = precio;
-    }
+    });
 
     // Consulta al servicio web de los aeropuertos
     $.getJSON('/aeropuertos/', function (respuesta) {
@@ -329,6 +320,7 @@ $(function () {
         else if(vuelosIdaCargados && vuelosVueltaCargados && vuelos_ida.length === 0 && vuelos_vuelta.length === 0){
             contenido.fadeOut().promise().done(function () {
                 lista.empty();
+                cabecera_vuelos.empty();
                 lista.append('<div class="cuadro-advertencia">\n' +
                     '        <span class="material-icons texto-advertencia">warning</span>\n' +
                     '        <div class="texto-advertencia">Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>\n' +
@@ -353,6 +345,7 @@ $(function () {
         else if(vuelosIdaCargados && vuelosVueltaCargados && vuelos_ida.length === 0 && vuelos_vuelta.length === 0){
             contenido.fadeOut().promise().done(function () {
                 lista.empty();
+                cabecera_vuelos.empty();
                 lista.append('<div class="cuadro-advertencia">\n' +
                     '        <span class="material-icons texto-advertencia">warning</span>\n' +
                     '        <div class="texto-advertencia">Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>\n' +
@@ -362,6 +355,13 @@ $(function () {
             vuelosIdaCargados = false;
             vuelosVueltaCargados = false;
         }
+    }
+
+    // Constructor del objeto ParejaVuelos, necesario para mostrar las parejas de vuelos en ida y vuelta.
+    function ParejaVuelos(ida, vuelta, precio) {
+        this.ida = ida;
+        this.vuelta = vuelta;
+        this.precio = precio;
     }
 
     // Una vez guardados los vuelos de ida tanto como de vuelta, se pueden mostrar. Esta función se encarga de ello.
@@ -428,7 +428,7 @@ $(function () {
                         // Este if es para asegurarnos de que el vuelo de vuelta es posterior al de ida.
                         // Aunque se haya comprobado eso al introducir la fecha, podría ocurrir que se muestre
                         // una combinación con un vuelo de vuelta anterior al de ida si la fecha de ida y de vuelta coincide
-                        if (hora_llegada_ida < hora_salida_vuelta) {
+                        if (pareja.ida.llegada < pareja.vuelta.salida) {
                             // Se muestran las parejas de vuelos. Es análogo a "sólo ida". La diferencia es que en cada tarjeta
                             // aparecen dos vuelos.
                             lista.append("<div class=\"zona-vuelo\">\n" +
@@ -503,6 +503,9 @@ $(function () {
 
     // Función auxiliar para guardar los aeropuertos
     // recibidos por el getJSON y que se muestren en el autocomplete.
+    // Se fuerza a que este escrito siempre un aeropuerto o ""
+    // Si se da click en otro lado sin haberlo completado, lo autocompleta
+    // siempre con el primer aeropuerto
     function guardar_aeropuertos(l) {
         aeropuertos = l;
         origen.autocomplete({
@@ -522,6 +525,9 @@ $(function () {
             change: function (event, ui) {
                 if(!ui.item && destino.val() !== ""){
                     destino.val($('ul#ui-id-2 li:first div').text());
+                    if ($('ul#ui-id-2 li:first div').text() == origen.val()){
+                        destino.val($('ul#ui-id-2 li:nth-child(2) div').text());
+                    }
                 }
             }
         });
@@ -619,4 +625,4 @@ $(function () {
         }
     }
 
-})
+});
