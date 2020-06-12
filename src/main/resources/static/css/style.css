@@ -306,3 +306,7 @@ divs y los elementos de la página se muestren correctamente colocados.
     color: #79631fc7;
     padding-left: 0.5rem;
 }
+
+.mensaje-destacado{
+    padding: 1rem;
+}

@@ -141,7 +141,7 @@ $(function () {
                         guardar_vuelta(lista);
                     });
                 }
-            // El usuario ha seleccionado sólo ida
+                // El usuario ha seleccionado sólo ida
             }else{
                 // Comprobar que el usuario ha completado todos los campos
                 if(origen.val() === "" || fecha_ida.val() === "" || destino.val() === ""){
@@ -172,7 +172,7 @@ $(function () {
                                     '        <div class="texto-advertencia">Lo sentimos, no hay vuelos disponibles desde el origen hasta el destino seleccionados para esa fecha.</div>\n' +
                                     '    </div>');
                                 contenido.fadeIn();
-                            // En el caso que la respuesta sí contenga vuelos, se muestran.
+                                // En el caso que la respuesta sí contenga vuelos, se muestran.
                             }else{
                                 // Se añade espacio al final del HTML porque al hacer una búsqueda se produce una animación
                                 // de scroll. Si la página fuera corta, la animación se quedaría a medias.
@@ -199,19 +199,43 @@ $(function () {
                                 // del vuelo de forma clara para el usuario.
                                 // También, aparece la aerolínea (logo en vez de texto, por estética), el cual es clickable para ver los
                                 // detalles de la aerolínea en un dialog.
+                                var listaVuelosSoloIda = [];
                                 $.each(respuesta, function (i, item) {
-                                    var codigo_aerolinea = item.aerolinea;
-                                    var codigo_vuelo = item.codigo;
-                                    var aeropuerto_origen = item.origen;
-                                    var aeropuerto_destino = item.destino;
-                                    var duracion = formatear_duracion(item.duracion);
-                                    var hora_salida = formatear_hora(item.salida);
-                                    var hora_llegada = formatear_hora(item.llegada);
-                                    var precio = item.precio;
+                                    listaVuelosSoloIda.push(item);
+                                });
+                                var indiceVueloMasBarato = 0;
+                                var indiceVueloMasCorto = 0;
+                                for (var i = 0; i<listaVuelosSoloIda.length - 1; i++){
+                                    if (listaVuelosSoloIda[i + 1].precio < listaVuelosSoloIda[indiceVueloMasBarato].precio)
+                                        indiceVueloMasBarato = i + 1;
+                                    if (listaVuelosSoloIda[i + 1].duracion < listaVuelosSoloIda[indiceVueloMasCorto].duracion)
+                                        indiceVueloMasCorto = i + 1;
+                                }
+                                var aux = listaVuelosSoloIda[0];
+                                listaVuelosSoloIda[0] = listaVuelosSoloIda[indiceVueloMasBarato];
+                                listaVuelosSoloIda[indiceVueloMasBarato] = aux;
+                                aux = listaVuelosSoloIda[1];
+                                if (indiceVueloMasBarato !== indiceVueloMasCorto){
+                                    listaVuelosSoloIda[1] = listaVuelosSoloIda[indiceVueloMasCorto];
+                                    listaVuelosSoloIda[indiceVueloMasCorto] = aux;
+                                    indiceVueloMasCorto = 1;
+                                }else {
+                                    indiceVueloMasCorto = 0;
+                                }
+                                indiceVueloMasBarato = 0;
+                                for (var i = 0; i<listaVuelosSoloIda.length; i++){
+                                    var codigo_aerolinea = listaVuelosSoloIda[i].aerolinea;
+                                    var codigo_vuelo = listaVuelosSoloIda[i].codigo;
+                                    var aeropuerto_origen = listaVuelosSoloIda[i].origen;
+                                    var aeropuerto_destino = listaVuelosSoloIda[i].destino;
+                                    var duracion = formatear_duracion(listaVuelosSoloIda[i].duracion);
+                                    var hora_salida = formatear_hora(listaVuelosSoloIda[i].salida);
+                                    var hora_llegada = formatear_hora(listaVuelosSoloIda[i].llegada);
+                                    var precio = listaVuelosSoloIda[i].precio;
                                     // Aclaración: al ser realmente un string, el entorno de programación lo formatea de esta forma
                                     // para que sea más fácil visualizarlo en desarrollo.
                                     lista.append("<div class=\"zona-vuelo\">\n" +
-                                        "            <div class=\"pareja\">\n" +
+                                        "            <div class=\"pareja\" id=\"vuelo-" + i + "\">\n" +
                                         "                <div class=\"vuelo\">\n" +
                                         "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
                                         "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea + "\" src=\"/images/" + codigo_aerolinea + ".png\" title=\"Ver detalles de aerolinea\" height=\"30px\">\n" +
@@ -241,7 +265,11 @@ $(function () {
                                         "                <h3 class=\"h3\">" + precio + "€</h3>\n" +
                                         "            </div>" +
                                         "        </div>");
-                                });
+                                    if (i == indiceVueloMasBarato)
+                                        $('#vuelo-' + i).append('<div class="mensaje-destacado">¡Opción más barata!</div>');
+                                    if (i == indiceVueloMasCorto)
+                                        $('#vuelo-' + i).append('<div class="mensaje-destacado">¡Opción más corta!</div>');
+                                }
                             }
                             // El contenido se muestra una vez cargado
                             contenido.fadeIn();
@@ -362,6 +390,7 @@ $(function () {
         this.ida = ida;
         this.vuelta = vuelta;
         this.precio = precio;
+        this.duracion_total = ida.duracion + vuelta.duracion;
     }
 
     // Una vez guardados los vuelos de ida tanto como de vuelta, se pueden mostrar. Esta función se encarga de ello.
@@ -400,8 +429,8 @@ $(function () {
                 zona_boton_vuelos.fadeIn();
                 // Se iteran todos los vuelos de ida y todos los vuelos de vuelta recibidos. Se crea una pareja de vuelos
                 // por combinación que exista.
-                for (var i = 0; i<vuelos_ida.length; i++){
-                    for (var j = 0; j<vuelos_vuelta.length; j++) {
+                for (var i = 0; i<vuelos_ida.length; i++) {
+                    for (var j = 0; j < vuelos_vuelta.length; j++) {
                         // Por cada combinación se crea el objeto ParejaVuelos.
                         // Antes es necesario calcular el precio, por si coinciden las aerolíneas,
                         // hacer el descuento del 20%
@@ -413,26 +442,55 @@ $(function () {
                         }
                         var pareja = new ParejaVuelos(vuelos_ida[i], vuelos_vuelta[j], precio);
                         parejas_vuelos.push(pareja);
-                        var codigo_aerolinea_ida = pareja.ida.aerolinea;
-                        var codigo_aerolinea_vuelta = pareja.vuelta.aerolinea;
-                        var codigo_ida = pareja.ida.codigo;
-                        var codigo_vuelta = pareja.vuelta.codigo;
-                        var aeropuerto_origen = pareja.ida.origen;
-                        var aeropuerto_vuelta = pareja.vuelta.origen;
-                        var duracion_ida = formatear_duracion(pareja.ida.duracion);
-                        var duracion_vuelta = formatear_duracion(pareja.vuelta.duracion);
-                        var hora_salida_ida = formatear_hora(pareja.ida.salida);
-                        var hora_llegada_ida = formatear_hora(pareja.ida.llegada);
-                        var hora_salida_vuelta = formatear_hora(pareja.vuelta.salida);
-                        var hora_llegada_vuelta = formatear_hora(pareja.vuelta.llegada);
+                    }
+                }
+                var indiceParejaMasBarata = 0;
+                var indiceParejaMasCorta = 0;
+                for (var i = 0; i<parejas_vuelos.length - 1; i++) {
+                    if (parejas_vuelos[i + 1].precio < parejas_vuelos[indiceParejaMasBarata].precio)
+                        indiceParejaMasBarata = i + 1;
+                    if (parejas_vuelos[i + 1].duracion_total < parejas_vuelos[indiceParejaMasCorta].duracion_total)
+                        indiceParejaMasCorta = i + 1;
+                }
+                var aux = parejas_vuelos[0];
+                parejas_vuelos[0] = parejas_vuelos[indiceParejaMasBarata];
+                parejas_vuelos[indiceParejaMasBarata] = aux;
+                aux = parejas_vuelos[1];
+                indiceParejaMasBarata = 0;
+                if (indiceParejaMasBarata != indiceParejaMasCorta){
+                    parejas_vuelos[1] = parejas_vuelos[indiceParejaMasCorta];
+                    parejas_vuelos[indiceParejaMasCorta] = aux;
+                    indiceParejaMasCorta = 1;
+                }else {
+                    indiceParejaMasCorta = 0;
+                }
+
+
+                for (var i = 0; i<parejas_vuelos.length; i++){
+                        var codigo_aerolinea_ida = parejas_vuelos[i].ida.aerolinea;
+                        var codigo_aerolinea_vuelta = parejas_vuelos[i].vuelta.aerolinea;
+                        var codigo_ida = parejas_vuelos[i].ida.codigo;
+                        var codigo_vuelta = parejas_vuelos[i].vuelta.codigo;
+                        var aeropuerto_origen = parejas_vuelos[i].ida.origen;
+                        var aeropuerto_vuelta = parejas_vuelos[i].vuelta.origen;
+                        var duracion_ida = formatear_duracion(parejas_vuelos[i].ida.duracion);
+                        var duracion_vuelta = formatear_duracion(parejas_vuelos[i].vuelta.duracion);
+                        var hora_salida_ida = formatear_hora(parejas_vuelos[i].ida.salida);
+                        var hora_llegada_ida = formatear_hora(parejas_vuelos[i].ida.llegada);
+                        var hora_salida_vuelta = formatear_hora(parejas_vuelos[i].vuelta.salida);
+                        var hora_llegada_vuelta = formatear_hora(parejas_vuelos[i].vuelta.llegada);
+                        var precio_sin_descuento_pareja = "";
+                        var precio_pareja = parejas_vuelos[i].precio;
+                        if (parejas_vuelos[i].ida.aerolinea == parejas_vuelos[i].vuelta.aerolinea)
+                            precio_sin_descuento_pareja = parejas_vuelos[i].precio / 0.8 + '€';
                         // Este if es para asegurarnos de que el vuelo de vuelta es posterior al de ida.
                         // Aunque se haya comprobado eso al introducir la fecha, podría ocurrir que se muestre
                         // una combinación con un vuelo de vuelta anterior al de ida si la fecha de ida y de vuelta coincide
-                        if (pareja.ida.llegada < pareja.vuelta.salida) {
+                        if (parejas_vuelos[i].ida.llegada < parejas_vuelos[i].vuelta.salida) {
                             // Se muestran las parejas de vuelos. Es análogo a "sólo ida". La diferencia es que en cada tarjeta
                             // aparecen dos vuelos.
                             lista.append("<div class=\"zona-vuelo\">\n" +
-                                "            <div class=\"pareja\">\n" +
+                                "            <div class=\"pareja\" id=\"vuelo-" + i + "\">\n" +
                                 "                <div class=\"vuelo\">\n" +
                                 "                    <div class=\"aerolinea-codigo-vuelo\">\n" +
                                 "                        <img class=\"aerolinea\" id=\"" + codigo_aerolinea_ida + "\" src=\"/images/" + codigo_aerolinea_ida + ".png\" title=\"Ver detalles de aerolinea\" height=\"30px\">\n" +
@@ -483,10 +541,14 @@ $(function () {
                                 "                </div>\n" +
                                 "            </div>\n" +
                                 "            <div class=\"precio\">\n" +
-                                "                <h3 class=\"precio-sin-descuento\">" + precio_sin_descuento + "</h3>\n" +
-                                "                <h4 class=\"h3\">" + precio + "€</h4>\n" +
+                                "                <h3 class=\"precio-sin-descuento\">" + precio_sin_descuento_pareja + "</h3>\n" +
+                                "                <h4 class=\"h3\">" + precio_pareja + "€</h4>\n" +
                                 "            </div>" +
                                 "        </div>");
+                            if (i == indiceParejaMasBarata)
+                                $('#vuelo-' + i).append('<div class="mensaje-destacado">¡Opción más barata!</div>');
+                            if (i == indiceParejaMasCorta)
+                                $('#vuelo-' + i).append('<div class="mensaje-destacado">¡Opción más corta!</div>');
                         }
                     }
                 }
@@ -495,7 +557,6 @@ $(function () {
                 if(parejas_vuelos.length < 3){
                     $('.contenido').css("padding-bottom", "28%");
                 }
-            }
             contenido.fadeIn();
             // Vaciar los arrays de esta búsqueda
         });
